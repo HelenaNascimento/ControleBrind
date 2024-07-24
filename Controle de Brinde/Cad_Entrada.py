@@ -14,8 +14,6 @@ def conexao():
     cnxn = bd.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER=192.168.0.71;DATABASE=BD_BRIND;UID=sa;PWD=Infarma@2016.')
     return cnxn
 
-cnxn = conexao()
-
 # Função para consultar fornecedor
 def consult_fornecedor(cnxn, CNPJ_FORN):
     query = """
@@ -48,7 +46,7 @@ def Consulta_NF_ENT(cnxn, CNPJ_FORN):
             Vlr_Total
         FROM FORNE FN
         INNER JOIN NF_CB_ENT NFE ON FN.IdFornecedor = NFE.IdFornecedor
-        WHERE NFE.CNPJ_FORN = ?                  
+        WHERE FN.CNPJ_FORN = ?                  
     """
     Consulta_Fornecedor = pd.read_sql_query(query, cnxn, params=[CNPJ_FORN])
     return Consulta_Fornecedor
@@ -84,7 +82,7 @@ with columns[0]:
     with st.container():
 
         with col[0]:
-            NF_ENT = st.text_input('NF_E:')
+            NF_ENT = st.text_input('NF_ENT:')
         with col[1]:
             Dat_Entrada = st.date_input('Data:')
 
@@ -108,8 +106,10 @@ with columns[0]:
         with col[0]:
             with colum[0]:
                 if st.button('Consultar Fornecedor'):
+                    cnxn = conexao()
                     Consul_Forne = consult_fornecedor(cnxn, CNPJ_FORN)
                     st.dataframe(Consul_Forne)
+                    cnxn.close()
 
             with colum[1]:
                 if st.button ('Inserir Dados Fornecedor'):
@@ -121,11 +121,14 @@ with columns[0]:
         with col[1]:
             with colum[2]:
                 if st.button('Consultar Dados da Nota'):
+                    cnxn = conexao()
                     Consul_NF = Consulta_NF_ENT(cnxn, CNPJ_FORN)
                     st.dataframe(Consul_NF)
+                    cnxn.close()
 
             with colum[3]:
                 if st.button('Inserir Dados na Nota'):
+                    cnxn = conexao()
                     fornecedor_df = consult_fornecedor(cnxn, CNPJ_FORN)
                     if not fornecedor_df.empty:
                         IdFornecedor = fornecedor_df.loc[0, 'IdFornecedor']
@@ -170,4 +173,4 @@ with columns[1]:
                 st.experimental_rerun()
 
 # Fechar a conexão ao banco de dados
-cnxn.close()
+# cnxn.close() <- Não feche a conexão aqui, pois ela já é fechada em cada operação acima.
