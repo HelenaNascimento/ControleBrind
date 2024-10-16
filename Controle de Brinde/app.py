@@ -1,14 +1,16 @@
 from flask import Flask
-from flask import Flask, render_template, request, redirect, url_for
-import pyodbc as bd
+
 
 app = Flask(__name__)
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
+def index():
+    return '<h1>Hello Word!</h1>'
 
-def login():
-    return render_template('login.html')
+@app.route('/user/<name>')
+def user(name):
+    return '<h1>Hello, %s!</h1>' % name
 
 if __name__ == '__main__':
     app.run(debug=True)
