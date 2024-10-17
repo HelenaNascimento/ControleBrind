@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="mb-4">Cadastrar Nota de Entrada</h1>
+        <h1 class="mb-4">Saída</h1>
 
         {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -18,46 +18,29 @@
             {% endif %}
         {% endwith %}
 
-        <form action="{{ url_for('consultar_fornecedor') }}" method="post">
+        <form action="{{ url_for('saida.consultar_brinde') }}" method="post">
             <div class="form-group">
-                <label for="CNPJ_FORN">CNPJ Fornecedor:</label>
+                <label for="">Brinde:</label>
                 <input type="text" class="form-control" name="CNPJ_FORN" required>
             </div>
-            <button type="submit" class="btn btn-primary">Consultar Fornecedor</button>
+            <button type="submit" class="btn btn-primary">Consultar Brinde</button>
         </form>
 
-        <form action="{{ url_for('inserir_fornecedor') }}" method="post">
+        <form action="{{ url_for('saida.inserir_fornecedor') }}" method="post">
             <div class="form-group">
                 <label for="Fantasia">Fantasia:</label>
                 <input type="text" class="form-control" name="Fantasia" required>
             </div>
-            <div class="form-group">
-                <label for="CNPJ_FORN">CNPJ:</label>
-                <input type="text" class="form-control" name="CNPJ_FORN" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Inserir Fornecedor</button>
+            
         </form>
-
-        <form action="{{ url_for('consultar_nota') }}" method="post">
+        <form action="{{ url_for('saida.inserir_nota') }}" method="post">
             <div class="form-group">
-                <label for="CNPJ_FORN">CNPJ Fornecedor:</label>
-                <input type="text" class="form-control" name="CNPJ_FORN" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Consultar Nota</button>
-        </form>
-
-        <form action="{{ url_for('inserir_nota') }}" method="post">
-            <div class="form-group">
-                <label for="NF_ENT">NF_ENT:</label>
+                <label for="NF_ENT">Número Nota Fiscal de Entrada:</label>
                 <input type="text" class="form-control" name="NF_ENT" required>
             </div>
             <div class="form-group">
                 <label for="Dat_Entrada">Data:</label>
                 <input type="date" class="form-control" name="Dat_Entrada" required>
-            </div>
-            <div class="form-group">
-                <label for="CNPJ_FORN">CNPJ Fornecedor:</label>
-                <input type="text" class="form-control" name="CNPJ_FORN" required>
             </div>
             <div class="form-group">
                 <label for="Qtd_Total">Quantidade Nota:</label>

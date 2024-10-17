@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, Blueprint, render_template, session, redirect, url_for, flash, request
 import pyodbc as bd
 import pandas as pd
 
@@ -23,12 +23,12 @@ def consult_fornecedor(cnxn, CNPJ_FORN):
     return Dados_Fornecedor
 
 # Função para cadastrar nota de entrada
-def cad_NF_Entrada(cnxn, NF_ENT, Dat_Entrada, Qtd_Total, Vlr_Total, IdFornecedor):
+def cad_NF_Entrada(cnxn, NF_ENT, Dat_Entrada, Qtd_Total, Vlr_Total, IdFornecedor, Vlr_Desc):
     cursor = cnxn.cursor()
     cursor.execute("""
-        INSERT INTO NF_CB_ENT (NF_ENT, Dat_Entrada, Qtd_Total, Vlr_Total, IdFornecedor)
-        VALUES (?, ?, ?, ?, ?)
-    """, (NF_ENT, Dat_Entrada, int(Qtd_Total), float(Vlr_Total), IdFornecedor))
+        INSERT INTO NF_CB_ENT (NF_ENT, Dat_Entrada, Qtd_Total, Vlr_Total, IdFornecedor, Vlr_Desc)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (NF_ENT, Dat_Entrada, int(Qtd_Total), float(Vlr_Total), IdFornecedor, float(Vlr_Desc)))
     cnxn.commit()
 
 # Função para consultar notas de entrada
@@ -47,7 +47,7 @@ def Consulta_NF_ENT(cnxn, CNPJ_FORN):
     Consulta_Fornecedor = pd.read_sql_query(query, cnxn, params=[CNPJ_FORN])
     return Consulta_Fornecedor
 
-def insert_data (cnxn, Fantasia, CNPJ_FORN):
+def insert_data(cnxn, Fantasia, CNPJ_FORN):
     cursor = cnxn.cursor()
     cursor.execute("""
         INSERT INTO FORNE (Fantasia, CNPJ_FORN)
@@ -63,19 +63,27 @@ def cad_Produto(cnxn, NF_ENT, EAN, Descricao, Quantidade, Vlr_Unit):
     """, (NF_ENT, EAN, Descricao, int(Quantidade), float(Vlr_Unit)))
     cnxn.commit()
 
-@app.route("/")
-def index():
-    return render_template('index.html')
+# Definindo o blueprint
+entrada_bp = Blueprint('entrada', __name__)
 
-@app.route('/consultar_fornecedor', methods=['POST'])
+@entrada_bp.route('/Ent_CB')
+def Ent_CB():
+    if 'user_id' not in session:
+        flash('Por favor, faça o login primeiro.', 'warning')
+        return redirect(url_for('login'))
+    return render_template('Entrada/entrada.html')
+
+# Rotas de funções associadas ao blueprint
+@entrada_bp.route('/consultar_fornecedor', methods=['POST'])
 def consultar_fornecedor():
     CNPJ_FORN = request.form['CNPJ_FORN']
     cnxn = conexao()
     fornecedor_df = consult_fornecedor(cnxn, CNPJ_FORN)
     cnxn.close()
-    return render_template('index.html', fornecedor_df=fornecedor_df)
+    return render_template('Entrada/entrada.html', fornecedor_df=fornecedor_df)
+#Alterar para tipo alerta
 
-@app.route('/inserir_fornecedor', methods=['POST'])
+@entrada_bp.route('/inserir_fornecedor', methods=['POST'])
 def inserir_fornecedor():
     Fantasia = request.form['Fantasia']
     CNPJ_FORN = request.form['CNPJ_FORN']
@@ -83,29 +91,31 @@ def inserir_fornecedor():
     insert_data(cnxn, Fantasia, CNPJ_FORN)
     cnxn.close()
     flash('Dados do fornecedor inseridos com sucesso!')
-    return redirect(url_for('index'))
+    return redirect(url_for('entrada.Ent_CB'))
+#Alterar para tipo alerta
 
-@app.route('/consultar_nota', methods=['POST'])
+@entrada_bp.route('/consultar_nota', methods=['POST'])
 def consultar_nota():
     CNPJ_FORN = request.form['CNPJ_FORN']
     cnxn = conexao()
     nota_df = Consulta_NF_ENT(cnxn, CNPJ_FORN)
     cnxn.close()
-    return render_template('index.html', nota_df=nota_df)
+    return render_template('Entrada/entrada.html', nota_df=nota_df)
 
-@app.route('/inserir_nota', methods=['POST'])
+@entrada_bp.route('/inserir_nota', methods=['POST'])
 def inserir_nota():
     NF_ENT = request.form['NF_ENT']
     Dat_Entrada = request.form['Dat_Entrada']
     CNPJ_FORN = request.form['CNPJ_FORN']
     Qtd_Total = request.form['Qtd_Total']
     Vlr_Total = request.form['Vlr_Total']
+    Vlr_Desc = request.form['Vlr_Desc']
     
     cnxn = conexao()
     fornecedor_df = consult_fornecedor(cnxn, CNPJ_FORN)
     if not fornecedor_df.empty:
         IdFornecedor = fornecedor_df.loc[0, 'IdFornecedor']
-        cad_NF_Entrada(cnxn, NF_ENT, Dat_Entrada, Qtd_Total, Vlr_Total, IdFornecedor)
+        cad_NF_Entrada(cnxn, NF_ENT, Dat_Entrada, Qtd_Total, Vlr_Total, IdFornecedor, Vlr_Desc)
         # Inserir os produtos
         produtos = request.form.getlist('produtos')
         for produto in produtos:
@@ -114,7 +124,8 @@ def inserir_nota():
     else:
         flash('Fornecedor não encontrado.')
     cnxn.close()
-    return redirect(url_for('index'))
+    return redirect(url_for('entrada.Ent_CB'))
 
 if __name__ == '__main__':
+    app.register_blueprint(entrada_bp)  # Registrando o blueprint
     app.run(debug=True)
