@@ -9,7 +9,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[VEND](
-	[IdVend] [int] IDENTITY(1,1) NOT NULL,
+	[IdVend] [int]  NOT NULL,
 	[Nome_Guerra] [nvarchar](100) NOT NULL,
 PRIMARY KEY CLUSTERED 
 (

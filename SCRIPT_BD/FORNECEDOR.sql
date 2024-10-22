@@ -10,17 +10,10 @@ GO
 
 CREATE TABLE [dbo].[FORNE](
 	[IdFornecedor] [int] IDENTITY(1,1) NOT NULL,
-	[Fantasia] [nvarchar](100) NOT NULL,
-	[CNPJ_FORN] [char](14) NOT NULL,
+	[Razao_Social] [varchar](100) NOT NULL,
+	[CNPJ_FORN] [varchar](20) NOT NULL,
 	[Tip_Comp] [bit] NULL,
-	[WEB] [text] NOT NULL,
-	[Logradouro] [varchar](250) NULL,
-	[Numero] [varchar](10) NULL,
-	[Bairro] [varchar](50) NULL,
-	[Cidade] [varchar](50) NULL,
-	[UF] [char](2) NULL,
-	[CEP] [int] NULL,
-	[Complemento] [varchar](250) NULL,
+	[ID_ENTXEND] [int] NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[IdFornecedor] ASC

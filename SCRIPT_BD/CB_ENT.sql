@@ -11,15 +11,16 @@ GO
 CREATE TABLE [dbo].[NF_CB_ENT](
 	[IdNota_Ent] [int] IDENTITY(1,1) NOT NULL,
 	[NF_ENT] [nvarchar](20) NOT NULL,
+	[Chv_Acesso] [nvarchar](44) NULL,
 	[Dat_Entrada] [date] NOT NULL,
+	[IdFornecedor] [int] NULL,
+	[Valor_Bruto] [decimal](18, 2) NOT NULL,
+	[Vlr_Desc] [decimal](10, 2) NULL,
+	[Per_Desconto] [decimal](18, 2) NULL,
+	[Outras_Dispesas] [decimal](18, 2) NULL,
 	[Qtd_Total] [int] NOT NULL,
 	[Vlr_Total] [decimal](18, 2) NOT NULL,
-	[IdFornecedor] [int] NULL,
-	[Vlr_Desc] [decimal](10, 2) NULL,
-	[Chv_Acesso] [nvarchar](44) NULL,
-	[Valor_Bruto] [decimal](18, 2) NOT NULL,
-	[Desconto] [decimal](18, 2) NULL,
-	[Outras_Dispesas] [decimal](18, 2) NULL,
+	[Observacao] [text]
 PRIMARY KEY CLUSTERED 
 (
 	[IdNota_Ent] ASC

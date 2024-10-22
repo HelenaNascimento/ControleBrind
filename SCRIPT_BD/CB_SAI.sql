@@ -11,10 +11,10 @@ GO
 CREATE TABLE [dbo].[NF_CB_SAI](
 	[IdNota_Sai] [int] IDENTITY(1,1) NOT NULL,
 	[NF_SAI] [nvarchar](20) NOT NULL,
-	[Dat_Saida] [date] NOT NULL,
-	[Qtd_Total] [int] NOT NULL,
 	[Cod_Pedido] [nvarchar](20) NOT NULL,
+	[Dat_Saida] [date] NOT NULL,
 	[IdClient] [int] NOT NULL,
+	[Qtd_Total] [int] NOT NULL,	
 	[Obs] [text] NULL,
 PRIMARY KEY CLUSTERED 
 (

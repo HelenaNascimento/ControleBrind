@@ -17,7 +17,7 @@ CREATE TABLE [dbo].[PROD](
 	[Cust_Med] [decimal](10, 2) NULL,
 	[UltVlrCompra] [decimal](10, 2) NULL,
 	[Dat_UltComp] [smalldatetime] NULL,
-	[Marca] [varchar](50) NOT NULL,
+	[ID_Marca] [varchar](50) NOT NULL,
 	[Modelo] [varchar](50) NOT NULL,
 PRIMARY KEY CLUSTERED 
 (

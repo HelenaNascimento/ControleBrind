@@ -10,17 +10,11 @@ GO
 
 CREATE TABLE [dbo].[MOVIM](
 	[IdMov] [int] IDENTITY(1,1) NOT NULL,
-	[IdNota_Ent] [int] NULL,
-	[NF_Ent] [nvarchar](20) NULL,
-	[Dat_Entrada] [date] NULL,
-	[CNPJ_FORN] [char](14) NULL,
-	[IdNota_Sai] [int] NULL,
-	[NF_Sai] [nvarchar](20) NULL,
-	[Dat_Saida] [date] NULL,
+	[Dat_Movimento] [date] NULL,
 	[IdProduto] [int] NULL,
-	[Qtd_Item] [int] NOT NULL,
-	[Vlr_Item] [decimal](18, 2) NOT NULL,
-	[IdVend] [int] NULL,
+	[Qtd_Ent] [int] NOT NULL,
+	[Qtd_Sai] [decimal](18, 2) NOT NULL,
+	[Qtd_Atual] [int] NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[IdMov] ASC
