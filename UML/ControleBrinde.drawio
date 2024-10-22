@@ -19,7 +19,7 @@
         <mxCell id="0T8ld3JZIWsMlSCex7S9-6" value="Use Case" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="290" y="1015" width="140" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="0T8ld3JZIWsMlSCex7S9-7" value="Cenário Principal:&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;spacingTop=-5;whiteSpace=wrap;html=1;align=left;fontSize=12;fontFamily=Helvetica;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+        <mxCell id="0T8ld3JZIWsMlSCex7S9-7" value="Cenário Principal:&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;1. O sistema exibe o formulário&amp;nbsp; para dar entrada no produto, contendo as seguintes informações:&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;1.1 Opção Selecionar (obrigatório, por padrão a entrada possui chave de acesso)&lt;/div&gt;&lt;div&gt;1.2&amp;nbsp;&lt;/div&gt;" style="text;spacingTop=-5;whiteSpace=wrap;html=1;align=left;fontSize=12;fontFamily=Helvetica;fillColor=none;strokeColor=none;" vertex="1" parent="1">
           <mxGeometry x="50" y="180" width="250" height="470" as="geometry" />
         </mxCell>
       </root>
