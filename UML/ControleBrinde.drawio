@@ -1,9 +1,27 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36" version="24.8.0">
   <diagram name="Página-1" id="yyB9Nb3cehIWXaKLEjLL">
-    <mxGraphModel>
+    <mxGraphModel dx="1673" dy="825" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="0T8ld3JZIWsMlSCex7S9-1" value="Actor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="700" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0T8ld3JZIWsMlSCex7S9-2" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Estudo de Caso&lt;/h1&gt;&lt;p&gt;Especificação do Caso de Uso&lt;br&gt;&lt;/p&gt;&lt;p&gt;Nome: Dar entrada de Produto&lt;/p&gt;&lt;p&gt;Objetivo: Inserir produtos no estoque de brinde&lt;/p&gt;&lt;p&gt;Ator: Recepção de produtos&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="20" width="250" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="0T8ld3JZIWsMlSCex7S9-4" value="Use Case" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="760" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="0T8ld3JZIWsMlSCex7S9-5" value="Use Case" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="885" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="0T8ld3JZIWsMlSCex7S9-6" value="Use Case" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="1015" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="0T8ld3JZIWsMlSCex7S9-7" value="Cenário Principal:&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;1. O sistema permite que o recebedor dos produtos possa inserir os mesmo no estoque, para isso irá precisar de algumas informações:&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;1.1 Nota Fiscal ou Recibo do produto com os seguintes dados:&lt;/div&gt;&lt;div&gt;1.1.1. cnpj do fornecedor&lt;/div&gt;&lt;div&gt;1.1.2.Razão social&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;spacingTop=-5;whiteSpace=wrap;html=1;align=left;fontSize=12;fontFamily=Helvetica;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="50" y="180" width="250" height="470" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
