@@ -1,7 +1,7 @@
 USE [BD_BRIND]
 GO
 
-/****** Object:  Table [dbo].[NF_CB_SAI]    Script Date: 16/10/2024 18:41:40 ******/
+/****** Object:  Table [dbo].[NF_CB_SAI]    Script Date: 22/10/2024 13:02:23 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -14,11 +14,13 @@ CREATE TABLE [dbo].[NF_CB_SAI](
 	[Dat_Saida] [date] NOT NULL,
 	[Qtd_Total] [int] NOT NULL,
 	[Cod_Pedido] [nvarchar](20) NOT NULL,
+	[IdClient] [int] NOT NULL,
+	[Obs] [text] NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[IdNota_Sai] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 
 

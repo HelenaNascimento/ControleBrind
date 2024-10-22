@@ -1,7 +1,7 @@
 USE [BD_BRIND]
 GO
 
-/****** Object:  Table [dbo].[PROD]    Script Date: 16/10/2024 18:42:12 ******/
+/****** Object:  Table [dbo].[PROD]    Script Date: 22/10/2024 12:48:30 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -13,6 +13,12 @@ CREATE TABLE [dbo].[PROD](
 	[Descricao] [nvarchar](100) NOT NULL,
 	[EAN] [char](13) NOT NULL,
 	[IdForne] [int] NULL,
+	[Qtd_Dispon] [int] NULL,
+	[Cust_Med] [decimal](10, 2) NULL,
+	[UltVlrCompra] [decimal](10, 2) NULL,
+	[Dat_UltComp] [smalldatetime] NULL,
+	[Marca] [varchar](50) NOT NULL,
+	[Modelo] [varchar](50) NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[IdProduto] ASC
