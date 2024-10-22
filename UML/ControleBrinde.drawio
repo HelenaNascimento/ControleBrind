@@ -19,7 +19,7 @@
         <mxCell id="0T8ld3JZIWsMlSCex7S9-6" value="Use Case" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="290" y="1015" width="140" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="0T8ld3JZIWsMlSCex7S9-7" value="Cenário Principal:&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;1. O sistema permite que o recebedor dos produtos possa inserir os mesmo no estoque, para isso irá precisar de algumas informações:&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;1.1 Nota Fiscal ou Recibo do produto com os seguintes dados:&lt;/div&gt;&lt;div&gt;1.1.1. cnpj do fornecedor&lt;/div&gt;&lt;div&gt;1.1.2.Razão social&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;spacingTop=-5;whiteSpace=wrap;html=1;align=left;fontSize=12;fontFamily=Helvetica;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+        <mxCell id="0T8ld3JZIWsMlSCex7S9-7" value="Cenário Principal:&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;spacingTop=-5;whiteSpace=wrap;html=1;align=left;fontSize=12;fontFamily=Helvetica;fillColor=none;strokeColor=none;" vertex="1" parent="1">
           <mxGeometry x="50" y="180" width="250" height="470" as="geometry" />
         </mxCell>
       </root>
