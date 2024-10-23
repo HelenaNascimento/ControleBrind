@@ -9,5 +9,6 @@ CREATE TABLE ITEN_ENT(
 	  , [Vlr_Desc] DECIMAL (10,2) NULL
 	  , [Id_Marca] Varchar(100) NULL
 	  , [Modelo] Varchar (100)NUll
-	  CONSTRAINT PK_ITEN_ENT PRIMARY KEY (ID_IT_ENT)
+	  PRIMARY KEY CLUSTERED 
+		(ID_IT_ENT ASC)
 )

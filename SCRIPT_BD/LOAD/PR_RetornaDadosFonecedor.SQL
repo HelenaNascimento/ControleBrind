@@ -1,0 +1,24 @@
+
+
+
+CREATE PROCEDURE dbo.PR_RetornaDadosFonecedor
+ 
+	@CNPJ_CHV VARCHAR(14)
+AS
+SET NOCOUNT ON;
+
+ 
+	IF (SELECT  TOP 1 1 FROM FORNE WHERE CNPJ_FORN = @CNPJ_CHV) = 1
+		BEGIN
+			SELECT 
+				 ID_FORNE,
+				 Razao_Social,
+				 CNPJ_FORN		
+			FROM FORNE WHERE CNPJ_FORN = @CNPJ_CHV 
+		END
+	ELSE
+		SELECT  'FORNECEDOR NÃO ENCONTRADO'
+
+GO
+
+--select substring(@chv_acesso, 26, 9)

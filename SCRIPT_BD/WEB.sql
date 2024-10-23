@@ -1,9 +1,9 @@
 CREATE TABLE WEB (
-    [ID_WEB] IDENTITY(1,1) NOT NULL,
+    [ID_WEB] INT IDENTITY(1,1) NOT NULL,
     [SITE] Varchar(200),
     [Loja] Varchar (200)
     PRIMARY KEY CLUSTERED 
 (
-	[ID_Marca] ASC
+	[ID_WEB] ASC
 )
 )

@@ -1,4 +1,8 @@
 CREATE TABLE TELMAR (
-    [IdTelmar] [int]  NOT NULL,
-	[Nome] [nvarchar](100) NOT NULL
-)
+    [ID_TELMAR] int  IDENTITY(1,1) NOT NULL,
+	[Nome] varchar(100) NOT NULL,
+	COD_DMD INT not null
+PRIMARY KEY CLUSTERED 
+(
+	[ID_TELMAR] ASC
+)) 

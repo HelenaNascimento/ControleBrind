@@ -1,0 +1,9 @@
+CREATE TABLE [dbo].[CLIEN](
+	[ID_CLIEN] [int] INT IDENTITY(1,1) NOT NULL,
+	[Razao_Social] [varchar](100) NOT NULL,
+	[CNPJ_CLIEN] [varchar](20) NOT NULL,
+
+PRIMARY KEY CLUSTERED 
+(
+	[ID_CLIEN] ASC
+))
