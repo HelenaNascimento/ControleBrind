@@ -22,15 +22,38 @@
         <div class="row">
             <!-- Coluna da esquerda para os formulários -->
             <div class="col-md-6">
+                <h3 for="CHV_ACESSO">Cabeçalho de Nota</h3>
                 <form action="{{ url_for('entrada.consultar_fornecedor') }}" method="post">
                     <div class="form-group">
-                        <label for="CNPJ_FORN">CNPJ Fornecedor:</label>
-                        <input type="text" class="form-control" name="CNPJ_FORN" required>
+                        <label for="CHV_ACESSO">Chave de Acesso:</label>
+                        <input type="text" class="form-control" name="CHV_ACESSO" required>
                     </div>
-                    <ul>
-                        <li><button type="submit" class="btn btn-primary">Consultar Fornecedor</button></li>
-                        <li><button type="submit" class="btn btn-primary">Cadastrar Fornecedor</button></li>
-                    </ul>
+                    
+                        <!--<button type="submit" class="btn btn-primary">Consultar Chave</button>-->
+                    
+                </form>
+
+                <form action="{{ url_for('entrada.consultar_fornecedor') }}" method="post">
+                    <tbody>
+                        <div class="form-group">
+                            <td><label for="NF_ENT">Número Nota:</label>
+                            <input type="text" class="form-control" name="NF_ENT" required></td>
+                        </div>
+
+                        <div class="form-group">
+                            <td><label for="Dat_Entrada">Data:</label>
+                            <input type="date" class="form-control" name="Dat_Entrada" required></td>
+                        </div>
+
+                        <div class="form-group">
+                            <td><label for="CNPJ_FORN">CNPJ Fornecedor:</label>
+                            <input type="text" class="form-control" name="CNPJ_FORN" required><td>
+                        </div>
+                    </tbody>
+                        
+                        <button type="submit" class="btn btn-primary">Consultar Fornecedor</button>
+                        <button type="submit" class="btn btn-primary">Cadastrar Fornecedor</button>
+                    
                 </form>
 
                 <form action="{{ url_for('entrada.inserir_fornecedor') }}" method="post">
@@ -41,14 +64,7 @@
                 </form>
 
                 <form action="{{ url_for('entrada.inserir_nota') }}" method="post">
-                    <div class="form-group">
-                        <label for="NF_ENT">Número Nota Fiscal de Entrada:</label>
-                        <input type="text" class="form-control" name="NF_ENT" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="Dat_Entrada">Data:</label>
-                        <input type="date" class="form-control" name="Dat_Entrada" required>
-                    </div>
+                    
                     <div class="form-group">
                         <label for="Qtd_Total">Quantidade Nota:</label>
                         <input type="number" class="form-control" name="Qtd_Total" required>
@@ -72,6 +88,11 @@
                 <!-- Aqui você pode adicionar mais informações ou outro conteúdo futuramente -->
             </div>
         </div>
+
+        {% if Chave_df is defined %}
+        <h2 class="mt-5">Chave_Acesso</h2>
+        {{ chave_df.to_html(classes="table table-bordered") | safe }}
+    {% endif %}
 
         {% if fornecedor_df is defined %}
             <h2 class="mt-5">Fornecedor</h2>

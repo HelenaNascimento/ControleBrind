@@ -10,9 +10,18 @@ def conexao():
     server = '192.186.11.15'
     database = 'BD_BRIND'
     
-    #cnxn = bd.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER=192.168.0.71;DATABASE=BD_BRIND;UID=sa;PWD=Infarma@2016.')
-    cnxn = bd.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID=sa;PWD=senha@123; Connection Timeout=30')
+    cnxn = bd.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER=192.168.0.71;DATABASE=BD_BRIND;UID=sa;PWD=Infarma@2016.')
+    #cnxn = bd.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID=sa;PWD=senha@123; Connection Timeout=30')
     return cnxn
+
+# PR_RetornaDadosFonecedor
+def consult_chave(cnxn, CHV_ACESSO):
+    query = """
+        exec dbo.PR_RetornaDadosFonecedor = ?
+    """
+    Dados_ChvAcesso = pd.read_sql_query(query, cnxn, params=[CHV_ACESSO])
+    return Dados_ChvAcesso
+
 
 # Função para consultar fornecedor
 def consult_fornecedor(cnxn, CNPJ_FORN):
@@ -76,6 +85,18 @@ def Ent_CB():
         flash('Por favor, faça o login primeiro.', 'warning')
         return redirect(url_for('login'))
     return render_template('Entrada/entrada.html')
+
+
+# Rotas de funções associadas ao blueprint
+@entrada_bp.route('/consultar_chave', methods=['POST'])
+def consultar_chave():
+    CNPJ_FORN = request.form['CHV_ACESSO']
+    cnxn = conexao()
+    chave_df = consult_chave(cnxn, CNPJ_FORN)
+    cnxn.close()
+    return render_template('Entrada/entrada.html', chave_df=chave_df)
+#Alterar para tipo alerta
+
 
 # Rotas de funções associadas ao blueprint
 @entrada_bp.route('/consultar_fornecedor', methods=['POST'])

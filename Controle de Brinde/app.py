@@ -1,15 +1,15 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
-import pyodbc as bd
-from werkzeug.security import check_password_hash
+# app.py
 
-# Importando blueprints
+from flask import Flask, jsonify, render_template, request, redirect, url_for, flash, session
+import pyodbc as bd
 from blueprints.entrada import entrada_bp
 from blueprints.saida import saida_bp
 from blueprints.brinde import brinde_bp
 from blueprints.televendas import televendas_bp
 
+# Iniciar o aplicativo Flask
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'  # para flash messages e sessões
+app.secret_key = 'supersecretkey'
 
 # Função de conexão ao banco de dados
 def conexao():
@@ -20,52 +20,55 @@ def conexao():
         print(f"Erro de conexão ao banco de dados: {e}")
         return None
 
-# Rota de login
-@app.route('/login', methods=['GET', 'POST'])
+# Rota da API com Flask para login
+@app.route('/login', methods=['POST'])
 def login():
-    if request.method == 'POST':
-        Login = request.form['username']
-        Senha = request.form['password']
+    try:
+        data = request.get_json()
+        Login = data.get('username')
+        Senha = data.get('password')
 
         conn = conexao()
         if conn is None:
-            flash('Erro ao conectar ao banco de dados.', 'danger')
-            return redirect(url_for('login'))
+            return jsonify({'success': False, 'message': 'Erro ao conectar ao banco de dados.'}), 500
 
-        try:
-            cursor = conn.cursor()
-            cursor.execute('SELECT * FROM LOGIN WHERE Login = ?', (Login,))
-            user = cursor.fetchone()
-            conn.close()
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM LOGIN WHERE Login = ?', (Login,))
+        user = cursor.fetchone()
+        conn.close()
 
-            if user:
-                if user.Senha == Senha:
-                    session['user_id'] = user.IdUser  # Exemplo de ID do usuário
-                    flash('Login realizado com sucesso!', 'success')
+        if user:
+            if user.Senha == Senha:
+                session['user_id'] = user.IdUser
+                
+                next_page = None
+                if Login == 'Entrada':
+                    next_page = 'entrada'
+                elif Login == 'Saida':
+                    next_page = 'saida'
+                elif Login == 'Brinde':
+                    next_page = 'brinde'
+                elif Login == 'Televendas':
+                    next_page = 'televendas'
 
-                    if Login == 'Entrada':
-                        return redirect(url_for('entrada.Ent_CB'))
-                    elif Login == 'Saida':
-                        return redirect(url_for('saida.Sai_CB'))
-                    elif Login == 'Brinde':
-                        return redirect(url_for('brinde.Dash_Brinde'))
-                    elif Login == 'Televendas':
-                        return redirect(url_for('televendas.Pedido_Brinde'))
-                else:
-                    flash('Senha incorreta.', 'danger')
+                return jsonify({
+                    'success': True,
+                    'message': 'Login realizado com sucesso!',
+                    'next_page': next_page
+                }), 200
             else:
-                flash('Usuário não encontrado.', 'danger')
-        except Exception as e:
-            flash(f'Erro na consulta ao banco de dados: {e}', 'danger')
+                return jsonify({'success': False, 'message': 'Senha incorreta.'}), 401
+        else:
+            return jsonify({'success': False, 'message': 'Usuário não encontrado.'}), 404
 
-    return render_template('login.html')
+    except Exception as e:
+        return jsonify({'success': False, 'message': f'Erro no servidor: {e}'}), 500
 
 # Rota de logout
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
-    flash('Logout realizado com sucesso!', 'success')
-    return redirect(url_for('login'))
+    return jsonify({'success': True, 'message': 'Logout realizado com sucesso!'})
 
 # Registrando os blueprints
 app.register_blueprint(entrada_bp)
@@ -74,4 +77,4 @@ app.register_blueprint(brinde_bp)
 app.register_blueprint(televendas_bp)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=5000, debug=True)  # Executa o servidor Flask
