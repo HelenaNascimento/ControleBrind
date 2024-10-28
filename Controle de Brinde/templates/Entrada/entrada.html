@@ -3,106 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle de Brindes</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+    <title>Cadastro de Nota de Entrada</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+        }
+        .container {
+            background-color: #aaa;
+            border-radius: 8px;
+            padding: 20px;
+            width: 80%;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+        
+        h1, h2 {
+            text-align: center;
+            color: #474952;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-control {
+            background-color: #ddd;
+            border: none;
+        }
+        .form-section {
+            background-color: #444;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .form-section h3 {
+            color: #ddd;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-size: 1.2em;
+        }
+        .btn-primary {
+            background-color: #5c85d6;
+            border-color: #5c85d6;
+        }
+        .btn-primary:hover {
+            background-color: #3c5bb6;
+        }
+        .btn-secondary {
+            background-color: #555;
+            border-color: #555;
+        }
+        .final-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function toggleFields() {
+            // Pega os botões de rádio e os campos de entrada
+            const possuiChave = document.querySelector('input[name="chave_acesso"]:checked').value;
+            const chaveAcessoField = document.querySelector('input[name="CHV_ACESSO"]');
+            const numeroNotaField = document.querySelector('input[name="NF_ENT"]');
+            const dataEmissaoField = document.querySelector('input[name="Dat_Entrada"]');
+            const cnpjFornecedorField = document.querySelector('input[name="CNPJ_FORN"]');
+            
+            if (possuiChave === 'sim') {
+                // Se tiver chave de acesso
+                chaveAcessoField.disabled = false;
+                numeroNotaField.disabled = true;
+                dataEmissaoField.disabled = true;
+                cnpjFornecedorField.disabled = true;
+                
+                // Exibir como rótulos se quiser exibir o valor atual como label (opcional)
+                numeroNotaField.classList.add('label-like');
+                dataEmissaoField.classList.add('label-like');
+                cnpjFornecedorField.classList.add('label-like');
+            } else {
+                // Se não tiver chave de acesso
+                chaveAcessoField.disabled = true;
+                numeroNotaField.disabled = false;
+                dataEmissaoField.disabled = false;
+                cnpjFornecedorField.disabled = false;
+
+                numeroNotaField.classList.remove('label-like');
+                dataEmissaoField.classList.remove('label-like');
+                cnpjFornecedorField.classList.remove('label-like');
+            }
+        }
+        
+        // Chama a função de ativação ao carregar a página
+        document.addEventListener("DOMContentLoaded", function() {
+            toggleFields();
+            document.querySelectorAll('input[name="chave_acesso"]').forEach((radio) => {
+                radio.addEventListener("change", toggleFields);
+            });
+        });
+    </script>
 </head>
 
 <body>
     <div class="container mt-5">
-        <h1 class="mb-4">Cadastrar Nota de Entrada</h1>
-
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div class="alert alert-success">
-                    {{ messages[0] }}
-                </div>
-            {% endif %}
-        {% endwith %}
-
+        <h1>Cadastro de Nota de Entrada</h1>
+        
+        <!-- Row para alinhar cabeçalho e itens lado a lado -->
         <div class="row">
-            <!-- Coluna da esquerda para os formulários -->
+            <!-- Seção do cabeçalho da nota -->
             <div class="col-md-6">
-                <h3 for="CHV_ACESSO">Cabeçalho de Nota</h3>
-                <form action="{{ url_for('entrada.consultar_fornecedor') }}" method="post">
-                    <div class="form-group">
-                        <label for="CHV_ACESSO">Chave de Acesso:</label>
-                        <input type="text" class="form-control" name="CHV_ACESSO" required>
-                    </div>
-                    
-                        <!--<button type="submit" class="btn btn-primary">Consultar Chave</button>-->
-                    
-                </form>
-
-                <form action="{{ url_for('entrada.consultar_fornecedor') }}" method="post">
-                    <tbody>
+                <div class="form-section">
+                    <h3>Cabeçalho Nota de Entrada</h3>
+                    <form action="{{ url_for('entrada.consultar_fornecedor') }}" method="post">
                         <div class="form-group">
-                            <td><label for="NF_ENT">Número Nota:</label>
-                            <input type="text" class="form-control" name="NF_ENT" required></td>
+                            <label>Possui Chave de Acesso?</label>
+                            <div>
+                                <input type="radio" name="chave_acesso" value="sim" checked> Sim
+                                <input type="radio" name="chave_acesso" value="nao"> Não
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <td><label for="Dat_Entrada">Data:</label>
-                            <input type="date" class="form-control" name="Dat_Entrada" required></td>
+                        <div class="form-group mb-3">
+                            <label for="CHV_ACESSO">Chave de Acesso:</label>
+                            <input type="text" class="form-control" name="CHV_ACESSO">
                         </div>
-
-                        <div class="form-group">
-                            <td><label for="CNPJ_FORN">CNPJ Fornecedor:</label>
-                            <input type="text" class="form-control" name="CNPJ_FORN" required><td>
-                        </div>
-                    </tbody>
                         
-                        <button type="submit" class="btn btn-primary">Consultar Fornecedor</button>
-                        <button type="submit" class="btn btn-primary">Cadastrar Fornecedor</button>
-                    
-                </form>
+                        <div class="row mb-3">
+                            <div class="col-md-4 form-group ">
+                                <label for="NF_ENT">Número Nota:</label>
+                                <input type="text" class="form-control" name="NF_ENT">
+                            </div>
+                            <div class="col-md-4  form-group">
+                                <label for="Dat_Entrada">Data Emissão:</label>
+                                <input type="date" class="form-control" name="Dat_Entrada">
+                            </div>
+                            <div class="col-md-4  form-group">
+                                <label for="CNPJ_FORN">CNPJ Fornecedor:</label>
+                                <input type="text" class="form-control" name="CNPJ_FORN">
+                            </div>
+                        </div>
 
-                <form action="{{ url_for('entrada.inserir_fornecedor') }}" method="post">
-                    <div class="form-group">
-                        <label for="Fantasia">Fantasia:</label>
-                        <input type="text" class="form-control" name="Fantasia" required>
-                    </div>
-                </form>
-
-                <form action="{{ url_for('entrada.inserir_nota') }}" method="post">
-                    
-                    <div class="form-group">
-                        <label for="Qtd_Total">Quantidade Nota:</label>
-                        <input type="number" class="form-control" name="Qtd_Total" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="Vlr_Total">Valor Nota:</label>
-                        <input type="text" class="form-control" name="Vlr_Total" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="Vlr_Desc">Valor Desconto:</label>
-                        <input type="text" class="form-control" name="Vlr_Desc" required>
-                    </div>
-
-                    <!-- Botão para inserir a nota -->
-                    <button type="submit" class="btn btn-primary">Inserir Nota</button>
-                </form>
+                        <div class="form-group">
+                            <label for="Fantasia">Razão Social:</label>
+                            <input type="text" class="form-control" name="Fantasia">
+                        </div>
+                        
+                        <div class="final-buttons">
+                            <button type="submit" class="btn btn-primary">Consultar</button>
+                            <button type="button" class="btn btn-primary" onclick="openModal()">Cadastrar</button>
+                        </div>
+                        <br>
+                        <div class="form-group mb-3">
+                            <div class="row mb-3">
+                                <div class="col-md-4 form-group">
+                                    <label for="Qtd_Total">Quantidade (Und):</label>
+                                    <input type="number" class="form-control" name="Qtd_Total">
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label for="Vlr_Total">Valor Bruto (R$):</label>
+                                    <input type="text" class="form-control" name="Vlr_Total">
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label for="Vlr_Desc">Desconto (%):</label>
+                                    <input type="text" class="form-control" name="Vlr_Desc">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
 
-            <!-- Coluna da direita, reservada para futuras informações -->
+            <!-- Seção dos itens da nota -->
             <div class="col-md-6">
-                <!-- Aqui você pode adicionar mais informações ou outro conteúdo futuramente -->
+                <div class="form-section">
+                    <h3>Itens</h3>
+                    <form action="{{ url_for('entrada.inserir_item') }}" method="post">
+                        <div class="form-group">
+                            <label for="Descricao">Descrição:</label>
+                            <input type="text" class="form-control" name="Descricao">
+                        </div>
+                        <div class="form-group mb-3">
+                            <div class="row mb-3">
+                                <div class="col-md-4 form-group">
+                                    <label for="ID">ID:</label>
+                                    <input type="text" class="form-control" name="ID">
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label for="EAN">EAN:</label>
+                                    <input type="text" class="form-control" name="EAN">
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label for="Marca">Marca / Modelo:</label>
+                                    <input type="text" class="form-control" name="Marca">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="final-buttons">
+                            <button type="button" class="btn btn-primary">Consultar</button>
+                            <button type="button" class="btn btn-primary">Cadastrar</button>
+                        </div>
+                        <br>
+                        <div class="form-group mb-3">
+                            <div class="row mb-3">
+                                    <div class="col-md-4 form-group">
+                                        <label for="Qtd_Item">Quantidade (Und):</label>
+                                        <input type="number" class="form-control" name="Qtd_Item">
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="Vlr_Bruto">Valor Bruto (R$):</label>
+                                        <input type="text" class="form-control" name="Vlr_Bruto">
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="Vlr_Desc">Desconto (%):</label>
+                                        <input type="text" class="form-control" name="Vlr_Desc">
+                                    </div>
+                            </div>
+                        </div>
+
+                        <div class="final-buttons">
+                            <button type="submit" class="btn btn-primary">Inserir</button>
+                            <button type="button" class="btn btn-secondary">Cancelar</button>
+                        </div>
+                    </form>
+
+                    <!-- Área para exibir itens inseridos -->
+                    <h3 class="mt-4">Itens Inseridos</h3>
+                    <div class="form-group">
+                        <textarea class="form-control" rows="5" readonly></textarea>
+                    </div>
+
+                    <div class="final-buttons">
+                        <button type="button" class="btn btn-primary">Finalizar</button>
+                        <button type="button" class="btn btn-secondary">Cancelar</button>
+                    </div>
+                </div>
             </div>
         </div>
-
-        {% if Chave_df is defined %}
-        <h2 class="mt-5">Chave_Acesso</h2>
-        {{ chave_df.to_html(classes="table table-bordered") | safe }}
-    {% endif %}
-
-        {% if fornecedor_df is defined %}
-            <h2 class="mt-5">Fornecedor</h2>
-            {{ fornecedor_df.to_html(classes="table table-bordered") | safe }}
-        {% endif %}
-
-        {% if nota_df is defined %}
-            <h2 class="mt-5">Notas de Entrada</h2>
-            {{ nota_df.to_html(classes="table table-bordered") | safe }}
-        {% endif %}
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="cadastrarModal" tabindex="-1" role="dialog" aria-labelledby="cadastrarModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cadastrarModalLabel">Confirmação de Cadastro</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza de que deseja cadastrar esta Nota de Entrada?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Confirmar Cadastro</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function openModal() {
+            $('#cadastrarModal').modal('show');
+        }
+    </script>
 </body>
 </html>

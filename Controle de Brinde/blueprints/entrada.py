@@ -76,6 +76,14 @@ def cad_Produto(cnxn, NF_ENT, EAN, Descricao, Quantidade, Vlr_Unit):
     """, (NF_ENT, EAN, Descricao, int(Quantidade), float(Vlr_Unit)))
     cnxn.commit()
 
+def insert_itens(cnxn, NF_ENT, Dat_Entrada, IdProduto, Qtd_Item, Vlr_Bruto, Vlr_Desc, Id_Marca, Modelo):
+    cursor = cnxn.cursor()
+    cursor.execute("""
+                   INSERT INTO ID_IT_ENT (NF_ENT, Dat_Entrada, IdProduto, Qtd_Item, Vlr_Bruto, Vlr_Desc, Id_Marca, Modelo)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                   """, (NF_ENT, Dat_Entrada, int(IdProduto), int(Qtd_Item), float(Vlr_Bruto), float(Vlr_Desc), int(Id_Marca), Modelo))
+    cnxn.commit()
+
 # Definindo o blueprint
 entrada_bp = Blueprint('entrada', __name__)
 
@@ -149,6 +157,22 @@ def inserir_nota():
     else:
         flash('Fornecedor não encontrado.')
     cnxn.close()
+    return redirect(url_for('entrada.Ent_CB'))
+
+
+@entrada_bp.route('/inserir_item', methods=['POST'])
+def inserir_item():
+    NF_ENT = request.form['NF_ENT']
+    EAN = request.form['EAN']
+    Descricao = request.form['Descricao']
+    Quantidade = request.form['Quantidade']
+    Vlr_Unit = request.form['Vlr_Unit']
+    
+    cnxn = conexao()
+    cad_Produto(cnxn, NF_ENT, EAN, Descricao, Quantidade, Vlr_Unit)
+    cnxn.close()
+    
+    flash('Item inserido com sucesso!')
     return redirect(url_for('entrada.Ent_CB'))
 
 if __name__ == '__main__':
