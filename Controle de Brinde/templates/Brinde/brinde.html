@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Nota de Entrada</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+        }
+        .container {
+            background-color: #aaa;
+            border-radius: 8px;
+            padding: 20px;
+            width: 80%;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+        
+        h1, h2 {
+            text-align: center;
+            color: #474952;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-control {
+            background-color: #ddd;
+            border: none;
+        }
+        .form-section {
+            background-color: #444;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .form-section h3 {
+            color: #ddd;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-size: 1.2em;
+        }
+        .btn-primary {
+            background-color: #5c85d6;
+            border-color: #5c85d6;
+        }
+        .btn-primary:hover {
+            background-color: #3c5bb6;
+        }
+        .btn-secondary {
+            background-color: #555;
+            border-color: #555;
+        }
+        .final-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .modal-title{
+            background-color: #aaa;
+            text-align: center;
+
+        }
+        .modal-body{
+            background-color: #333;
+           
+        }    
+    </style>
+    <script></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Estoque</h1>   
+        <div class="row">
+            <!-- Consulta Produto -->
+            <div class="col-md-6">
+                <div class="form-section">
+                    <div class="row">                    
+                        <form action="{{ url_for('brinde.consultar_produto')}}" method="post">
+                            <div class="form-group">
+                                <label for="Descricao">Descrição:</label>
+                                <input type="text" class="form-control" name="Descricao">
+                            </div>
+                            <div class="form-group mb-3">
+                                <div class="row mb-3">
+                                    <div class="col-md-4 form-group">
+                                        <label> ID:  </label>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label> EAN:  </label>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label> Fornecedor:  </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="final-buttons">
+                                <button type="submit" class="btn btn-primary">Consultar</button>
+                                <button type="button" class="btn btn-secondary">Cadastrar</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Área para exibir itens inseridos -->
+                    <h3 class="mt-4">Itens</h3>
+                    <div class="form-group">
+                       <textarea class="form-control" rows="5" readonly></textarea>
+                    </div>
+                </div>
+            </div>
+            <!--Deashboard Estoque Produto-->
+            <div class="col-md-6">
+                <div class="form-section">
+                    <div class="row">                    
+                        <form action="{{ url_for('brinde.consultar_produto')}}" method="post">
+                            <div class="form-group">
+                                <label for="Descricao">Deashboard:</label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
