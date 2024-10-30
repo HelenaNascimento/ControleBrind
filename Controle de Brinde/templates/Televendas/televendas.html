@@ -1,125 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Nota de Entrada</title>
+    <title>Solicitação de Brindes</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             background-color: #333;
             color: #fff;
+            font-family: Arial, sans-serif;
         }
         .container {
-            background-color: #aaa;
+            display: flex;
+            background-color: #c4c9d4;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 50px auto;
+            width: 90%;
+            max-width: 1200px;
+        }
+        .left-section, .right-section {
+            flex: 1;
+            background-color: #d7dae0;
             border-radius: 8px;
             padding: 20px;
-            width: 80%;
-            max-width: 80%;
-            margin: 0 auto;
-        }
-        
-        h1, h2 {
-            text-align: center;
-            color: #474952;
+            margin: 5px;
         }
         .form-group label {
             font-weight: bold;
+            color: #333;
         }
         .form-control {
-            background-color: #ddd;
+            background-color: #ccc;
+            color: #333;
             border: none;
         }
-        .form-section {
-            background-color: #444;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        .form-section h3 {
-            color: #ddd;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            font-size: 1.2em;
-        }
         .btn-primary {
-            background-color: #5c85d6;
-            border-color: #5c85d6;
+            background-color: #8576d1;
+            border: none;
         }
         .btn-primary:hover {
-            background-color: #3c5bb6;
+            background-color: #6459b2;
         }
-        .btn-secondary {
-            background-color: #555;
-            border-color: #555;
+        .form-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #333;
         }
-        .final-buttons {
-            text-align: center;
+        .buttons-row {
+            display: flex;
+            justify-content: space-between;
             margin-top: 20px;
         }
-        .modal-title{
-            background-color: #aaa;
-            text-align: center;
-
+        .text-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
         }
-        .modal-body{
-            background-color: #333;
-           
-        }    
+        .table-list {
+            height: 150px;
+            background-color: #eee;
+            overflow-y: scroll;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .table-list div {
+            background-color: #ddd;
+            padding: 5px;
+            border-bottom: 1px solid #ccc;
+        }
     </style>
-    <script></script>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1>Estoque</h1>   
-        <div class="row">
-            <!-- Consulta Produto -->
-            <div class="col-md-6">
-                <div class="form-section">
-                    <div class="row">                    
-                        <form action="{{ url_for('televendas.consultar_produto')}}" method="post">
-                            <div class="form-group">
-                                <label for="Descricao">Descrição:</label>
-                                <input type="text" class="form-control" name="Descricao">
-                            </div>
-                            <div class="form-group mb-3">
-                                <div class="row mb-3">
-                                    <div class="col-md-4 form-group">
-                                        <label> ID:  </label>
-                                    </div>
-                                    <div class="col-md-4 form-group">
-                                        <label> EAN:  </label>
-                                    </div>
-                                    <div class="col-md-4 form-group">
-                                        <label> Fornecedor:  </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="final-buttons">
-                                <button type="submit" class="btn btn-primary">Consultar</button>
-                                <button type="button" class="btn btn-secondary">Cadastrar</button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- Área para exibir itens inseridos -->
-                    <h3 class="mt-4">Itens</h3>
-                    <div class="form-group">
-                       <textarea class="form-control" rows="5" readonly></textarea>
-                    </div>
-                </div>
+    <div class="container">
+        <!-- Left Section -->
+        <div class="left-section">
+            <div class="form-title">Solicitação de Brindes</div>
+            <div class="form-group">
+                <label for="numPedido">Num Pedido</label>
+                <input type="text" id="numPedido" class="form-control">
             </div>
-            <!--Deashboard Estoque Produto-->
-            <div class="col-md-6">
-                <div class="form-section">
-                    <div class="row">                    
-                        <form action="{{ url_for('televendas.consultar_produto')}}" method="post">
-                            <div class="form-group">
-                                <label for="Descricao">Deashboard:</label>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label for="item">Item</label>
+                <input type="text" id="item" class="form-control">
             </div>
+            <div class="text-row">
+                <p>Cliente: XYZ</p>
+                <p>Cidade: Fortaleza</p>
+                <p>Tel: Carmencyta</p>
+            </div>
+            <div class="form-group">
+                <label for="observacao">Observação</label>
+                <input type="text" id="observacao" class="form-control">
+            </div>
+            <div class="buttons-row">
+                <button type="button" class="btn btn-primary">Finalizar</button>
+                <button type="button" class="btn btn-primary">Cancelar</button>
+            </div>
+        </div>
+
+        <!-- Right Section -->
+        <div class="right-section">
+            <div class="form-title">ITENS</div>
+            <div class="form-group">
+                <label for="descricao">Descrição:</label>
+                <input type="text" id="descricao" class="form-control">
+            </div>
+            <div class="text-row">
+                <input type="text" class="form-control" placeholder="ID" style="width: 30%;">
+                <input type="text" class="form-control" placeholder="EAN" style="width: 30%;">
+                <input type="text" class="form-control" placeholder="Marca" style="width: 30%;">
+            </div>
+            <button type="button" class="btn btn-primary">Consultar</button>
+            <div class="table-list">
+                <!-- Simulating rows of data for the items -->
+                <div>ID: 1 | EAN: 12345 | Marca: ABC</div>
+                <div>ID: 2 | EAN: 67890 | Marca: DEF</div>
+                <div>ID: 3 | EAN: 11223 | Marca: GHI</div>
+                <div>ID: 4 | EAN: 44556 | Marca: JKL</div>
+                <div>ID: 5 | EAN: 77889 | Marca: MNO</div>
+            </div>
+            <button type="button" class="btn btn-primary mt-3">Adicionar</button>
         </div>
     </div>
 </body>
