@@ -71,7 +71,7 @@
         function toggleFields() {
             // Pega os botões de rádio e os campos de entrada
             const possuiChave = document.querySelector('input[name="chave_acesso"]:checked').value;
-            const chaveAcessoField = document.querySelector('input[name="CHV_ACESSO"]');
+            const chaveAcessoField = document.querySelector('input[name="in_chav_acesso"]');
             const numeroNotaField = document.querySelector('input[name="NF_ENT"]');
             const dataEmissaoField = document.querySelector('input[name="Dat_Entrada"]');
             const cnpjFornecedorField = document.querySelector('input[name="CNPJ_FORN"]');
@@ -98,6 +98,8 @@
                 dataEmissaoField.classList.remove('label-like');
                 cnpjFornecedorField.classList.remove('label-like');
             }
+
+
         }
 
         function toggleFields_cad() {
@@ -116,7 +118,7 @@
         // Chama a função de ativação ao carregar a página
         document.addEventListener("DOMContentLoaded", function() {
             toggleFields();
-            document.querySelectorAll('input[name="chave_acesso"]').forEach((radio) => {
+            document.querySelectorAll('input[name="in_chav_acesso"]').forEach((radio) => {
                 radio.addEventListener("change", toggleFields);
             });
         });
@@ -138,14 +140,14 @@
                         <div class="form-group">
                             <label>Possui Chave de Acesso?</label>
                             <div>
-                                <input type="radio" name="chave_acesso" value="sim" checked> Sim
-                                <input type="radio" name="chave_acesso" value="nao"> Não
+                                <input type="radio" name="in_chav_acesso" value="sim" checked> Sim
+                                <input type="radio" name="in_chav_acesso" value="nao"> Não
                             </div>
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="CHV_ACESSO">Chave de Acesso:</label>
-                            <input type="text" class="form-control" name="CHV_ACESSO">
+                            <label for="in_chav_acesso">Chave de Acesso:</label>
+                            <input type="number" class="form-control" name="in_chav_acesso">
                         </div>
                         
                         <div class="row mb-3">
@@ -170,7 +172,7 @@
                         
                         <div class="final-buttons">
                             <button type="submit" class="btn btn-primary">Consultar</button>
-                            <button type="button" class="btn btn-primary" onclick="openModal()">Cadastrar</button>
+                            <button type="button" class="btn btn-primary" onclick="cad_forne()">Cadastrar</button>
                         </div>
                         <br>
                         <div class="form-group mb-3">
@@ -221,7 +223,7 @@
 
                         <div class="final-buttons">
                             <button type="button" class="btn btn-primary">Consultar</button>
-                            <button type="button" class="btn btn-primary">Cadastrar</button>
+                            <button type="button" class="btn btn-primary" onclick="cad_prod()">Cadastrar</button>
                         </div>
                         <br>
                         <div class="form-group mb-3">
@@ -261,8 +263,8 @@
             </div>
         </div>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="cadastrarModal" tabindex="-1" role="dialog" aria-labelledby="cadastrarModalLabel" aria-hidden="true">
+    <!-- Modal - Cadastrar Fornecedor-->
+    <div class="modal fade" id="cadastrarFornecedor" tabindex="-1" role="dialog" aria-labelledby="cadastrarModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -348,12 +350,102 @@
             </div>
         </div>
     </div>
+        <!-- Modal - Cadastrar Produto -->
+        <div class="modal fade" id="cadastrarProduto" tabindex="-1" role="dialog" aria-labelledby="cadastrarModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cadastrarModalLabel">Cadastrar Fornecedor</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="Fantasia">Razão Social:</label>
+                            <input type="text" class="form-control" name="Fantasia">
+                        </div>
+                        <br>
+                        <div> 
+                            <label for="cnpjcadastro">CNPJ Fornecedor:</label>  
+                            <input type="text" class="form-control" name="CNPJ_FORN">
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label>Compra: </label>
+                            <div>
+                                <input type="radio" name="compra" value="Web" checked  onchange="toggleFields_cad()"> Web
+                                <input type="radio" name="compra" value="Lj_F" onchange="toggleFields_cad()"> Loja Física
+                            </div>
+                        </div>
+                        
+                        <!-- Campo para o site do fornecedor -->
+                        <div id="webField" class="form-group">
+                            <label for="website">Site do Fornecedor:</label>
+                            <input type="url" class="form-control" name="website" placeholder="https://">
+                        </div>
+                        
+                        <!-- Campos para endereço do fornecedor -->
+                        <div id="addressFields" style="display: none;">
+                            <div class="form-group mb-3">
+                                <div class="row mb-3">
+                                        <div class="col-md-4 form-group">                       
+                                            <label for="rua">Rua:</label>
+                                            <input type="text" class="form-control" name="rua">
+                                        </div>
+                                        <div class="col-md-4 form-group">                       
+                                            <label for="rua">Nº:</label>
+                                            <input type="text" class="form-control" name="numero">
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <div class="row mb-3">
+                                    <div class="col-md-4 form-group">                           
+                                        <label for="bairro">Bairro:</label>
+                                        <input type="text" class="form-control" name="bairro">
+                                    </div>
+                                    <div class="col-md-4 form-group">  
+                                        <label for="estado">Complemento:</label>
+                                        <input type="text" class="form-control" name="complemento">
+                                    </div>                                   
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <div class="row mb-3">
+                                        <div class="col-md-4 form-group">  
+                                            <label for="cidade">Cidade:</label>
+                                            <input type="text" class="form-control" name="cidade">
+                                        </div>
+                                        <div class="col-md-4 form-group">                         
+                                            <label for="estado">Estado(UF):</label>
+                                            <input type="text" class="form-control" name="estado">
+                                        </div>
+                                        <div class="col-md-4 form-group">   
+                                            <label for="cep">CEP:</label>
+                                            <input type="text" class="form-control" name="cep">                            
+                                        </div>
+                                </div>
+                            <div>
+                        </div>
+                    </div>
+                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary">Confirmar Cadastro</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        function openModal() {
-            $('#cadastrarModal').modal('show');
+        function cad_forne() {
+            $('#cadastrarFornecedor').modal('show');
+        }
+        function cad_prod() {
+            $('#cadastrarProduto').modal('show');
         }
     </script>
 </body>
