@@ -1,13 +1,10 @@
 from flask import Flask, Blueprint, render_template, session, redirect, url_for, flash, request
-#from flask_caching import Cache
 import pyodbc as bd
 import pandas as pd
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
-#cache = Cache(app)
 
-# Função de conexão ao banco de dados
 def conexao():
     server = '192.186.11.15'
     database = 'BD_BRIND'

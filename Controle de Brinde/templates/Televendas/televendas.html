@@ -9,31 +9,38 @@
         body {
             background-color: #333;
             color: #fff;
-            font-family: Arial, sans-serif;
         }
         .container {
-            display: flex;
             background-color: #aaa;
-            padding: 20px;
             border-radius: 8px;
-            margin: 50px auto;
-            width: 90%;
-            max-width: 1200px;
+            padding: 20px;
+            width: 80%;
+            max-width: 80%;
+            margin: 0 auto;
         }
-        .left-section, .right-section {
-            flex: 1;
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 5px;
+        
+        h1, h2 {
+            text-align: center;
+            color: #474952;
         }
         .form-group label {
-            font-weight: #ddd;
-            color: #333;
+            font-weight: bold;
         }
         .form-control {
             background-color: #ddd;
             border: none;
+        }
+        .form-section {
+            background-color: #444;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .form-section h3 {
+            color: #ddd;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-size: 1.2em;
         }
         .btn-primary {
             background-color: #5c85d6;
@@ -42,86 +49,131 @@
         .btn-primary:hover {
             background-color: #3c5bb6;
         }
-        .form-title {
-            font-weight: bold;
-            font-size: 1.2em;
-            margin-bottom: 15px;
-            color: #333;
+        .btn-secondary {
+            background-color: #555;
+            border-color: #555;
         }
-        .buttons-row {
-            display: flex;
-            justify-content: space-between;
+        .final-buttons {
+            text-align: center;
             margin-top: 20px;
         }
-        .text-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
+        .modal-title{
+            background-color: #aaa;
+            text-align: center;
+
         }
-        .table-list {
-            height: 150px;
-            background-color: #eee;
-            overflow-y: scroll;
-            border-radius: 4px;
-            margin-top: 10px;
-        }
-        .table-list div {
-            background-color: #ddd;
-            padding: 5px;
-            border-bottom: 1px solid #ccc;
+        .modal-body{
+            background-color: #333;
+           
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Left Section -->
-        <div class="left-section">
-            <div class="form-title">Solicitação de Brindes</div>
-            <div class="form-group">
-                <label for="numPedido">Num Pedido</label>
-                <input type="text" id="numPedido" class="form-control">
+    <div class="container mt-5">
+        <h1>Solicitação de Brindes</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-section">
+                    <h3>Dados Solicitação</h3>
+                    <div class="form-group mb-3">
+                        <div class="row mb-3">
+                            <div class="col-md-4 form-group">
+                                <div class="form-group">
+                                    <label for="numPedido">Num Pedido</label>
+                                    <input type="text" id="numPedido" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <div class="form-group">
+                                    <label for="item">Item</label>
+                                    <input type="text" id="item" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                    <div class="form-group">
+                                        <label for="Quantidade">Quantidade</label>
+                                        <input type="text" id="item" class="form-control">
+                                    </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <div class="form-group">
+                                    <label for="Fornecedor">Fornecedor</label>
+                                    <input type="text" id="item" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <div class="row mb-3">
+                            <div class="col-md-4 form-group">
+                                <div class="form-group">
+                                    <p>Cliente: XYZ</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <div class="form-group">
+                                    <p>Cidade: Fortaleza</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <div class="form-group">
+                                    <p>Tel: Carmencyta</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="observacao">Observação</label>
+                        <input type="text" id="observacao" class="form-control">
+                    </div>
+                    <div class="buttons-row">
+                        <button type="button" class="btn btn-primary">Finalizar</button>
+                        <button type="button" class="btn btn-primary">Cancelar</button>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="item">Item</label>
-                <input type="text" id="item" class="form-control">
+            <!-- Right Section -->
+            <div class="col-md-6">
+                <div class="form-section">
+                    <div class="form-title">ITENS</div>
+                    <div class="form-group">
+                        <label for="descricao">Descrição:</label>
+                        <input type="text" id="descricao" class="form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <div class="row mb-3">
+                            <div class="col-md-4 form-group">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="ID" style="width: 30%;">
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="EAN" style="width: 30%;">
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Marca" style="width: 30%;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="final-buttons">
+                        <button type="button" class="btn btn-primary">Consultar</button>
+                    </div>
+                   
+                    <div class="table-list">
+                        <!-- Simulating rows of data for the items -->
+                        <div>ID: 1 | EAN: 12345 | Marca: ABC</div>
+                        <div>ID: 2 | EAN: 67890 | Marca: DEF</div>
+                        <div>ID: 3 | EAN: 11223 | Marca: GHI</div>
+                        <div>ID: 4 | EAN: 44556 | Marca: JKL</div>
+                        <div>ID: 5 | EAN: 77889 | Marca: MNO</div>
+                    </div>
+                    <button type="button" class="btn btn-primary mt-3">Adicionar</button>
+                </div>
             </div>
-            <div class="text-row">
-                <p>Cliente: XYZ</p>
-                <p>Cidade: Fortaleza</p>
-                <p>Tel: Carmencyta</p>
-            </div>
-            <div class="form-group">
-                <label for="observacao">Observação</label>
-                <input type="text" id="observacao" class="form-control">
-            </div>
-            <div class="buttons-row">
-                <button type="button" class="btn btn-primary">Finalizar</button>
-                <button type="button" class="btn btn-primary">Cancelar</button>
-            </div>
-        </div>
-
-        <!-- Right Section -->
-        <div class="right-section">
-            <div class="form-title">ITENS</div>
-            <div class="form-group">
-                <label for="descricao">Descrição:</label>
-                <input type="text" id="descricao" class="form-control">
-            </div>
-            <div class="text-row">
-                <input type="text" class="form-control" placeholder="ID" style="width: 30%;">
-                <input type="text" class="form-control" placeholder="EAN" style="width: 30%;">
-                <input type="text" class="form-control" placeholder="Marca" style="width: 30%;">
-            </div>
-            <button type="button" class="btn btn-primary">Consultar</button>
-            <div class="table-list">
-                <!-- Simulating rows of data for the items -->
-                <div>ID: 1 | EAN: 12345 | Marca: ABC</div>
-                <div>ID: 2 | EAN: 67890 | Marca: DEF</div>
-                <div>ID: 3 | EAN: 11223 | Marca: GHI</div>
-                <div>ID: 4 | EAN: 44556 | Marca: JKL</div>
-                <div>ID: 5 | EAN: 77889 | Marca: MNO</div>
-            </div>
-            <button type="button" class="btn btn-primary mt-3">Adicionar</button>
         </div>
     </div>
 </body>
