@@ -75,9 +75,8 @@
         <div class="row">
             <!-- Consulta Produto -->
             <div class="col-md-6">
-                <div class="form-section">
-                    <div class="row">                    
-                        <form action="{{ url_for('brinde.consultar_produto')}}" method="post">
+                <div class="form-section">           
+                    <form action="{{ url_for('brinde.consultar_produto')}}" method="post">
                             <div class="form-group">
                                 <label for="Descricao">Descrição:</label>
                                 <input type="text" class="form-control" name="Descricao">
@@ -105,8 +104,8 @@
                                 <button type="submit" class="btn btn-primary">Consultar</button>
                                 <button type="button" class="btn btn-secondary">Cadastrar</button>
                             </div>
-                        </form>
-                    </div>
+                    </form>
+            
                     <!-- Área para exibir lista de itens -->
                     <h3 class="mt-4">Itens</h3>
                     <div class="form-group">
@@ -116,14 +115,12 @@
             </div>
             <!--Deashboard Estoque Produto-->
             <div class="col-md-6">
-                <div class="form-section">
-                    <div class="row">                    
-                        <form action="{{ url_for('brinde.consultar_produto')}}" method="post">
-                            <div class="form-group">
-                                <label for="Descricao">Deashboard:</label>
-                            </div>
-                        </form>
-                    </div>
+                <div class="form-section">                                  
+                    <form action="{{ url_for('brinde.consultar_produto')}}" method="post">
+                        <div class="form-group">
+                            <label for="Descricao">Deashboard:</label>
+                        </div>
+                    </form> 
                 </div>
             </div>
         </div>
