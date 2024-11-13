@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, render_template, session, redirect, url_for, flash, request
+from flask import Flask, Blueprint, render_template, session, redirect, url_for, flash, request, jsonify
 import pyodbc as bd
 import pandas as pd
 
@@ -6,14 +6,29 @@ app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
 def conexao():
-    server = '192.186.11.15'
-    database = 'BD_BRIND'
-    
-    cnxn = bd.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER=192.168.0.71;DATABASE=BD_BRIND;UID=sa;PWD=Infarma@2016.')
-    #cnxn = bd.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID=sa;PWD=senha@123; Connection Timeout=30')
+    try:
+        server = 'SRVHOSTHPNEW'
+        database = 'BD_BRIND'
+        cnxn = bd.connect(f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID=sa;PWD=Infarma@2016.')
+        return cnxn
+    except Exception as e:
+        print(f"Erro ao conectar ao banco de dados: {e}")
+        return None
 
-    return cnxn
-
+# Função para obter o estoque disponível
+def todo_estoque_positivo(cnxn):
+    query = """
+        SELECT 
+            ID_PROD,
+            Descricao,
+            Qtd_Dispon,
+            MR.Nome AS Marca
+        FROM PRODU PR
+            JOIN MARCA MR ON PR.ID_Marca = MR.ID_Marca
+        WHERE Qtd_Dispon > 0        
+    """
+    produto = pd.read_sql_query(query, cnxn)
+    return produto
 
 
 # Definindo o blueprint
@@ -25,6 +40,23 @@ def Pedido_Brinde():
         flash('Por favor, faça o login primeiro.', 'warning')
         return redirect(url_for('login'))
     return render_template('Televendas/televendas.html')
+
+
+# Rota para fornecer estoque disponível em formato JSON
+@televendas_bp.route('/estoque_disponivel', methods=['POST'])
+def estoque_positivo():
+    cnxn = conexao()
+    if not cnxn:
+        return jsonify({"erro": "Erro ao conectar ao banco de dados."}), 500
+    
+    try:
+        estoque = todo_estoque_positivo(cnxn)
+        return jsonify({"estoque": estoque.to_dict(orient="records")})
+    except Exception as e:
+        print(f"Erro ao carregar estoque: {e}")
+        return jsonify({"erro": str(e)}), 500
+    finally:
+        cnxn.close()
 
 if __name__ == '__main__':
     app.register_blueprint(televendas_bp)  # Registrando o blueprint
