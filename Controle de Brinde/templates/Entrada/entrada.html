@@ -302,14 +302,14 @@
                     <div id="addressFields" style="display: none;">
                         <div class="form-group mb-3">
                             <div class="row mb-3">
-                                    <div class="col-md-4 form-group">                       
-                                        <label for="rua">Rua:</label>
-                                        <input type="text" class="form-control" name="rua">
-                                    </div>
-                                    <div class="col-md-4 form-group">                       
-                                        <label for="rua">Nº:</label>
-                                        <input type="text" class="form-control" name="numero">
-                                    </div>
+                                <div class="col-md-4 form-group">                       
+                                    <label for="rua">Rua:</label>
+                                    <input type="text" class="form-control" name="rua">
+                                </div>
+                                <div class="col-md-4 form-group">                       
+                                    <label for="rua">Nº:</label>
+                                    <input type="text" class="form-control" name="numero">
+                                </div>
                             </div>
                         </div>
                         <div class="form-group mb-3">
@@ -326,19 +326,19 @@
                         </div>
                         <div class="form-group mb-3">
                             <div class="row mb-3">
-                                    <div class="col-md-4 form-group">  
-                                        <label for="cidade">Cidade:</label>
-                                        <input type="text" class="form-control" name="cidade">
-                                    </div>
-                                    <div class="col-md-4 form-group">                         
-                                        <label for="estado">Estado(UF):</label>
-                                        <input type="text" class="form-control" name="estado">
-                                    </div>
-                                    <div class="col-md-4 form-group">   
-                                        <label for="cep">CEP:</label>
-                                        <input type="text" class="form-control" name="cep">                            
-                                    </div>
-                            </div>
+                                <div class="col-md-4 form-group">  
+                                    <label for="cidade">Cidade:</label>
+                                    <input type="text" class="form-control" name="cidade">
+                                </div>
+                                <div class="col-md-4 form-group">                         
+                                    <label for="estado">Estado(UF):</label>
+                                    <input type="text" class="form-control" name="estado">
+                                </div>
+                                <div class="col-md-4 form-group">   
+                                    <label for="cep">CEP:</label>
+                                    <input type="text" class="form-control" name="cep">                            
+                                </div>
+                            </div>                            
                         <div>
                     </div>
                 </div>
@@ -351,87 +351,44 @@
         </div>
     </div>
     <!-- Modal - Cadastrar Produto -->
-    <div class="modal fade" id="cadastrarProduto" tabindex="-1" role="dialog" aria-labelledby="cadastrarModalLabel" aria-hidden="true">
+    <div class="modal fade" id="cadastrarProduto" tabindex="-1" role="dialog" aria-labelledby="cadastrarprodModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="cadastrarModalLabel">Cadastrar Fornecedor</h5>
+                    <h5 class="modal-title" id="cadastrarprodlLabel">Cadastrar Produto</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="Fantasia">Razão Social:</label>
-                        <input type="text" class="form-control" name="Fantasia">
+                        <label for="Descricao">Descricao:</label>
+                        <input type="text" class="form-control" name="Descricao">
                     </div>
                     <br>
                     <div> 
-                        <label for="cnpjcadastro">CNPJ Fornecedor:</label>  
-                        <input type="text" class="form-control" name="CNPJ_FORN">
+                        <label for="EAN">EAN</label>  
+                        <input type="text" class="form-control" name="EAN">
                     </div>
                     <br>
                     <div class="form-group">
-                        <label>Compra: </label>
-                        <div>
-                            <input type="radio" name="compra" value="Web" checked  onchange="toggleFields_cad()"> Web
-                            <input type="radio" name="compra" value="Lj_F" onchange="toggleFields_cad()"> Loja Física
+                        <div> 
+                            <label for="Marca">Marca</label>  
+                            <input type="text" class="form-control" name="Marca">
                         </div>
                     </div>
-                    
-                    <!-- Campo para o site do fornecedor -->
-                    <div id="webField" class="form-group">
-                        <label for="website">Site do Fornecedor:</label>
-                        <input type="url" class="form-control" name="website" placeholder="https://">
-                    </div>
-                    
-                    <!-- Campos para endereço do fornecedor -->
-                    <div id="addressFields" style="display: none;">
-                        <div class="form-group mb-3">
-                            <div class="row mb-3">
-                                    <div class="col-md-4 form-group">                       
-                                        <label for="rua">Rua:</label>
-                                        <input type="text" class="form-control" name="rua">
-                                    </div>
-                                    <div class="col-md-4 form-group">                       
-                                        <label for="rua">Nº:</label>
-                                        <input type="text" class="form-control" name="numero">
-                                    </div>
-                            </div>
-                        </div>
-                        <div class="form-group mb-3">
-                            <div class="row mb-3">
-                                <div class="col-md-4 form-group">                           
-                                    <label for="bairro">Bairro:</label>
-                                    <input type="text" class="form-control" name="bairro">
-                                </div>
-                                <div class="col-md-4 form-group">  
-                                    <label for="estado">Complemento:</label>
-                                    <input type="text" class="form-control" name="complemento">
-                                </div>                                   
-                            </div>
-                        <div class="form-group mb-3">
-                            <div class="row mb-3">
-                                    <div class="col-md-4 form-group">  
-                                        <label for="cidade">Cidade:</label>
-                                        <input type="text" class="form-control" name="cidade">
-                                    </div>
-                                    <div class="col-md-4 form-group">                         
-                                        <label for="estado">Estado(UF):</label>
-                                        <input type="text" class="form-control" name="estado">
-                                    </div>
-                                    <div class="col-md-4 form-group">   
-                                        <label for="cep">CEP:</label>
-                                        <input type="text" class="form-control" name="cep">                            
-                                    </div>
-                            </div>
+                    <br>
+                    <div class="form-group">
+                        <div> 
+                            <label for="Modelo">Modelo</label>  
+                            <input type="text" class="form-control" name="Modelo">
                         </div>
                     </div>
                 </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary">Confirmar Cadastro</button>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Confirmar Cadastro</button>
+                </div>
             </div>
         </div>
     </div>
