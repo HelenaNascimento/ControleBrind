@@ -6,13 +6,16 @@ app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
 def conexao():
-    server = '192.186.11.15'
-    database = 'BD_BRIND'
-    
-    cnxn = bd.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER=192.168.0.71;DATABASE=BD_BRIND;UID=sa;PWD=Infarma@2016.')
-    #cnxn = bd.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID=sa;PWD=senha@123; Connection Timeout=30')
-    return cnxn
-
+    try:
+        server = 'WIN11\\DEV' #SRVHOSTHPNEW
+        database = 'BD_BRIND'
+        username = 'sa'
+        password = 'senha@123' #Infarma@2016.
+        cnxn = bd.connect(f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}')
+        return cnxn
+    except Exception as e:
+        print(f"Erro ao conectar ao banco de dados: {e}")
+        return None
 # PR_RetornaDadosFonecedor
 def consult_chave(cnxn, CHV_ACESSO):
     query = """
