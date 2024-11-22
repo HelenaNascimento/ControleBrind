@@ -14,10 +14,10 @@ app.secret_key = 'supersecretkey'  # para flash messages e sessões
 # Função de conexão ao banco de dados
 def conexao():
     try:
-        server = '192.168.0.250' #'WIN11\\DEV' #'SRVHOSTHPNEW'
+        server = 'WIN11\\DEV' #'WIN11\\DEV' #'SRVHOSTHPNEW'
         database = 'BD_BRIND'
         username = 'sa'
-        password = 'Infarma@2016.' #'senha@123' #Infarma@2016.
+        password = 'senha@123' #'senha@123' #Infarma@2016.
         cnxn = bd.connect(f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}')
         return cnxn
     except Exception as e:

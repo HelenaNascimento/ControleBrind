@@ -69,44 +69,37 @@
     </style>
     <script>
         function toggleFields() {
-            // Pega os botões de rádio e os campos de entrada
+            // Obtém o valor selecionado dos botões de rádio
             const possuiChave = document.querySelector('input[name="chave_acesso"]:checked').value;
+            
+            // Campos de entrada
             const chaveAcessoField = document.querySelector('input[name="in_chav_acesso"]');
             const numeroNotaField = document.querySelector('input[name="NF_ENT"]');
             const dataEmissaoField = document.querySelector('input[name="Dat_Entrada"]');
             const cnpjFornecedorField = document.querySelector('input[name="CNPJ_FORN"]');
-            
+
             if (possuiChave === 'sim') {
-                // Se tiver chave de acesso
+                // Se "Sim" estiver selecionado
                 chaveAcessoField.disabled = false;
                 numeroNotaField.disabled = true;
                 dataEmissaoField.disabled = true;
                 cnpjFornecedorField.disabled = true;
-                
-                // Exibir como rótulos se quiser exibir o valor atual como label (opcional)
-                numeroNotaField.classList.add('label-like');
-                dataEmissaoField.classList.add('label-like');
-                cnpjFornecedorField.classList.add('label-like');
             } else {
-                // Se não tiver chave de acesso
+                // Se "Não" estiver selecionado
                 chaveAcessoField.disabled = true;
                 numeroNotaField.disabled = false;
                 dataEmissaoField.disabled = false;
                 cnpjFornecedorField.disabled = false;
-
-                numeroNotaField.classList.remove('label-like');
-                dataEmissaoField.classList.remove('label-like');
-                cnpjFornecedorField.classList.remove('label-like');
             }
-
-
         }
 
         function toggleFields_cad() {
+            // Verifica qual botão de rádio está selecionado
             const compraWeb = document.querySelector('input[name="compra"][value="Web"]').checked;
             const webField = document.getElementById("webField");
             const addressFields = document.getElementById("addressFields");
-    
+
+            // Alterna a exibição dos campos com base no valor
             if (compraWeb) {
                 webField.style.display = "block";
                 addressFields.style.display = "none";
@@ -115,15 +108,29 @@
                 addressFields.style.display = "block";
             }
         }
-        // Chama a função de ativação ao carregar a página
-        document.addEventListener("DOMContentLoaded", function() {
-            toggleFields();
-            document.querySelectorAll('input[name="in_chav_acesso"]').forEach((radio) => {
+
+        // Chamado ao carregar a página
+        document.addEventListener("DOMContentLoaded", function () {
+            toggleFields(); // Inicializa os campos
+            toggleFields_cad(); // Inicializa os campos de cadastro
+
+            // Adiciona eventos aos botões de rádio
+            document.querySelectorAll('input[name="chave_acesso"]').forEach((radio) => {
                 radio.addEventListener("change", toggleFields);
             });
         });
-        document.addEventListener("DOMContentLoaded", toggleFields_cad);
+
+        function cad_forne() {
+            // Abre o modal de cadastro de fornecedor
+            $('#cadastrarFornecedor').modal('show');
+        }
+
+        function cad_prod() {
+            // Abre o modal de cadastro de produto
+            $('#cadastrarProduto').modal('show');
+        }
     </script>
+
 </head>
 
 <body>
@@ -140,11 +147,10 @@
                         <div class="form-group">
                             <label>Possui Chave de Acesso?</label>
                             <div>
-                                <input type="radio" name="in_chav_acesso" value="sim" checked> Sim
-                                <input type="radio" name="in_chav_acesso" value="nao"> Não
+                                <input type="radio" name="chave_acesso" value="sim" checked> Sim
+                                <input type="radio" name="chave_acesso" value="nao"> Não
                             </div>
                         </div>
-
                         <div class="form-group mb-3">
                             <label for="in_chav_acesso">Chave de Acesso:</label>
                             <input type="number" class="form-control" name="in_chav_acesso">
@@ -223,7 +229,7 @@
 
                         <div class="final-buttons">
                             <button type="button" class="btn btn-primary">Consultar</button>
-                            <button type="button" class="btn btn-primary" onclick="cad_prod()">Cadastrar</button>
+                            <button type="button" class="btn btn-primary" onclick="cad_prod()">Cadastrar Produto</button>
                         </div>
                         <br>
                         <div class="form-group mb-3">
@@ -395,13 +401,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        function cad_forne() {
-            $('#cadastrarFornecedor').modal('show');
-        }
-        function cad_prod() {
-            $('#cadastrarProduto').modal('show');
-        }
-    </script>
+
 </body>
 </html>
