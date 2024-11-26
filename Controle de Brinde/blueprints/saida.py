@@ -7,15 +7,16 @@ app.secret_key = "supersecretkey"
 
 def conexao():
     try:
-        server = 'WIN11\\DEV' #'WIN11\\DEV' #'SRVHOSTHPNEW'
+        server = 'SRVHOSTHPNEW' #'WIN11\\DEV' #'SRVHOSTHPNEW'
         database = 'BD_BRIND'
         username = 'sa'
-        password = 'senha@123' #'senha@123' #Infarma@2016.
+        password = 'Infarma@2016.' #'senha@123' #Infarma@2016.
         cnxn = bd.connect(f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}')
         return cnxn
     except Exception as e:
         print(f"Erro ao conectar ao banco de dados: {e}")
         return None
+
 
 
 # Definindo o blueprint

@@ -1,28 +1,34 @@
 from flask import Flask, Blueprint, render_template, session, redirect, url_for, flash, request
 import pyodbc as bd
 import pandas as pd
+import xml as xml
+
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
 def conexao():
     try:
-        server = 'WIN11\\DEV' #'WIN11\\DEV' #'SRVHOSTHPNEW'
+        server = 'SRVHOSTHPNEW' #'WIN11\\DEV' #'SRVHOSTHPNEW'
         database = 'BD_BRIND'
         username = 'sa'
-        password = 'senha@123' #'senha@123' #Infarma@2016.
+        password = 'Infarma@2016.' #'senha@123' #Infarma@2016.
         cnxn = bd.connect(f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}')
         return cnxn
     except Exception as e:
         print(f"Erro ao conectar ao banco de dados: {e}")
         return None
+
+
 # PR_RetornaDadosFonecedor
 def consult_chave(cnxn, CHV_ACESSO):
     query = """
-        exec dbo.PR_RetornaDadosFonecedor = ?
+        exec dbo.PR_RetornaDadosFonecedor @CHV_ACESSO = ?
     """
+    # Obtenção de dados como DataFrame
     Dados_ChvAcesso = pd.read_sql_query(query, cnxn, params=[CHV_ACESSO])
     return Dados_ChvAcesso
+
 
 
 # Função para consultar fornecedor
@@ -91,33 +97,55 @@ entrada_bp = Blueprint('entrada', __name__)
 
 @entrada_bp.route('/Ent_CB')
 def Ent_CB():
-    #cache.clear()  
     if 'user_id' not in session:
         flash('Por favor, faça o login primeiro.', 'warning')
         return redirect(url_for('login'))
-    return render_template('Entrada/entrada.html')
+    dados = {  # Variável inicializada com valores padrão
+        'NF_ENT': '',
+        'Dat_Entrada': '',
+        'CNPJ_FORN': '',
+        'Fantasia': ''
+    }
+    return render_template('Entrada/entrada.html', dados=dados)
 
 
-# Rotas de funções associadas ao blueprint
-@entrada_bp.route('/consultar_chave', methods=['POST'])
-def consultar_chave():
-    CNPJ_FORN = request.form['CHV_ACESSO']
-    cnxn = conexao()
-    chave_df = consult_chave(cnxn, CNPJ_FORN)
-    cnxn.close()
-    return render_template('Entrada/entrada.html', chave_df=chave_df)
-#Alterar para tipo alerta
 
-
-# Rotas de funções associadas ao blueprint
 @entrada_bp.route('/consultar_fornecedor', methods=['POST'])
 def consultar_fornecedor():
-    CNPJ_FORN = request.form['CNPJ_FORN']
-    cnxn = conexao()
-    fornecedor_df = consult_fornecedor(cnxn, CNPJ_FORN)
-    cnxn.close()
-    return render_template('Entrada/entrada.html', fornecedor_df=fornecedor_df)
-#Alterar para tipo alerta
+    chave_acesso = request.form.get('chave_acesso')  # Verifica se "Sim" ou "Não"
+    dados = {
+        'NF_ENT': '',
+        'Dat_Entrada': '',
+        'CNPJ_FORN': '',
+        'Fantasia': ''
+    }  # Inicializa com valores vazios
+
+    if chave_acesso == 'sim':
+        # Se chave de acesso for fornecida, buscar os dados
+        CHV_ACESSO = request.form.get('CHV_ACESSO')
+        if CHV_ACESSO:  # Apenas tenta consultar se a chave foi preenchida
+            cnxn = conexao()
+            try:
+                chave_df = consult_chave(cnxn, CHV_ACESSO)
+            finally:
+                cnxn.close()
+
+            # Preenche os dados retornados pela consulta
+            if not chave_df.empty:
+                dados.update({
+                    'NF_ENTRADA': chave_df.iloc[0]['NF_ENTRADA'],
+                    'CNPJ_FORN': chave_df.iloc[0]['CNPJ_FORN'],
+                    'Fantasia': chave_df.iloc[0]['Razao_Social']
+                })
+            else:
+                dados['Fantasia'] = "Fornecedor não encontrado."
+    else:
+        # Caso "Não", os dados serão preenchidos manualmente (mantêm-se vazios)
+        pass
+
+    return render_template('Entrada/entrada.html', dados=dados)
+
+
 
 @entrada_bp.route('/inserir_fornecedor', methods=['POST'])
 def inserir_fornecedor():

@@ -74,7 +74,7 @@
             
             // Campos de entrada
             const chaveAcessoField = document.querySelector('input[name="in_chav_acesso"]');
-            const numeroNotaField = document.querySelector('input[name="NF_ENT"]');
+            const numeroNotaField = document.querySelector('input[name="NF_ENTRADA"]');
             const dataEmissaoField = document.querySelector('input[name="Dat_Entrada"]');
             const cnpjFornecedorField = document.querySelector('input[name="CNPJ_FORN"]');
 
@@ -92,6 +92,22 @@
                 cnpjFornecedorField.disabled = false;
             }
         }
+     
+    
+        function toggleChaveAcesso() {
+            const sim = document.getElementById('chave-sim').checked;
+            const campoChave = document.getElementById('campo-chave-acesso');
+            if (sim) {
+                campoChave.style.display = 'block';
+            } else {
+                campoChave.style.display = 'none';
+            }
+        }
+ 
+        // Esconde o campo inicialmente se "Não" for a opção padrão
+        window.onload = function() {
+            toggleChaveAcesso();
+        };
 
         function toggleFields_cad() {
             // Verifica qual botão de rádio está selecionado
@@ -147,35 +163,33 @@
                         <div class="form-group">
                             <label>Possui Chave de Acesso?</label>
                             <div>
-                                <input type="radio" name="chave_acesso" value="sim" checked> Sim
-                                <input type="radio" name="chave_acesso" value="nao"> Não
+                                <input type="radio" name="chave_acesso" value="sim" id="chave-sim" onclick="toggleChaveAcesso()" checked> Sim
+                                <input type="radio" name="chave_acesso" value="nao" id="chave-nao" onclick="toggleChaveAcesso()"> Não
                             </div>
                         </div>
-                        <div class="form-group mb-3">
+                        <div class="form-group mb-3" id="campo-chave-acesso">
                             <label for="in_chav_acesso">Chave de Acesso:</label>
-                            <input type="number" class="form-control" name="in_chav_acesso">
+                            <input type="number" class="form-control" name="CHV_ACESSO">
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4 form-group">
+                                <label for="NF_ENTRADA">Número Nota:</label>
+                                <input type="text" class="form-control" name="NF_ENTRADA" value="{{ dados.get('NF_ENTRADA', '') }}">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="Dat_Entrada">Data Emissão:</label>
+                                <input type="date" class="form-control" name="Dat_Entrada" value="{{ dados.get('Dat_Entrada', '') }}">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="CNPJ_FORN">CNPJ Fornecedor:</label>
+                                <input type="text" class="form-control" name="CNPJ_FORN" value="{{ dados.get('CNPJ_FORN', '') }}">
+                            </div>
                         </div>
                         
-                        <div class="row mb-3">
-                            <div class="col-md-4 form-group ">
-                                <label for="NF_ENT">Número Nota:</label>
-                                <input type="text" class="form-control" name="NF_ENT">
-                            </div>
-                            <div class="col-md-4  form-group">
-                                <label for="Dat_Entrada">Data Emissão:</label>
-                                <input type="date" class="form-control" name="Dat_Entrada">
-                            </div>
-                            <div class="col-md-4  form-group">
-                                <label for="CNPJ_FORN">CNPJ Fornecedor:</label>
-                                <input type="text" class="form-control" name="CNPJ_FORN">
-                            </div>
-                        </div>
-
                         <div class="form-group">
                             <label for="Fantasia">Razão Social:</label>
-                            <input type="text" class="form-control" name="Fantasia">
-                        </div>
-                        
+                            <input type="text" class="form-control" name="Fantasia" value="{{ dados.get('Fantasia', '') }}">
+                        </div>                                               
                         <div class="final-buttons">
                             <button type="submit" class="btn btn-primary">Consultar</button>
                             <button type="button" class="btn btn-primary" onclick="cad_forne()">Cadastrar</button>
