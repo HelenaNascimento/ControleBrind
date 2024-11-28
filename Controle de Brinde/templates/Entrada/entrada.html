@@ -69,29 +69,26 @@
     </style>
     <script>
         function toggleFields() {
-            // Obtém o valor selecionado dos botões de rádio
             const possuiChave = document.querySelector('input[name="chave_acesso"]:checked').value;
             
-            // Campos de entrada
-            const chaveAcessoField = document.querySelector('input[name="in_chav_acesso"]');
+            const chaveAcessoField = document.querySelector('input[name="CHV_ACESSO"]');
             const numeroNotaField = document.querySelector('input[name="NF_ENTRADA"]');
             const dataEmissaoField = document.querySelector('input[name="Dat_Entrada"]');
             const cnpjFornecedorField = document.querySelector('input[name="CNPJ_FORN"]');
-
+        
             if (possuiChave === 'sim') {
-                // Se "Sim" estiver selecionado
                 chaveAcessoField.disabled = false;
                 numeroNotaField.disabled = true;
                 dataEmissaoField.disabled = true;
                 cnpjFornecedorField.disabled = true;
             } else {
-                // Se "Não" estiver selecionado
                 chaveAcessoField.disabled = true;
                 numeroNotaField.disabled = false;
                 dataEmissaoField.disabled = false;
                 cnpjFornecedorField.disabled = false;
             }
         }
+        
      
     
         function toggleChaveAcesso() {
@@ -137,14 +134,17 @@
         });
 
         function cad_forne() {
-            // Abre o modal de cadastro de fornecedor
+            // Fecha qualquer modal ativo e abre o modal de fornecedor
+            $('.modal').modal('hide');
             $('#cadastrarFornecedor').modal('show');
         }
-
+        
         function cad_prod() {
-            // Abre o modal de cadastro de produto
+            // Fecha qualquer modal ativo e abre o modal de produto
+            $('.modal').modal('hide');
             $('#cadastrarProduto').modal('show');
         }
+        
     </script>
 
 </head>
@@ -243,7 +243,7 @@
 
                         <div class="final-buttons">
                             <button type="button" class="btn btn-primary">Consultar</button>
-                            <button type="button" class="btn btn-primary" onclick="cad_prod()">Cadastrar Produto</button>
+                            <button type="button" class="btn btn-primary" onclick="$('#cadastrarProduto').modal('show')">Cadastrar</button>
                         </div>
                         <br>
                         <div class="form-group mb-3">
@@ -375,46 +375,31 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="cadastrarprodlLabel">Cadastrar Produto</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="cadastrarprodModalLabel">Cadastrar</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="Descricao">Descricao:</label>
-                        <input type="text" class="form-control" name="Descricao">
-                    </div>
-                    <br>
-                    <div> 
-                        <label for="EAN">EAN</label>  
-                        <input type="text" class="form-control" name="EAN">
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <div> 
-                            <label for="Marca">Marca</label>  
-                            <input type="text" class="form-control" name="Marca">
+                    <!-- Conteúdo do modal -->
+                    <form>
+                        <div class="form-group">
+                            <label for="descricao">Descrição</label>
+                            <input type="text" class="form-control" id="descricao" name="descricao">
                         </div>
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <div> 
-                            <label for="Modelo">Modelo</label>  
-                            <input type="text" class="form-control" name="Modelo">
-                        </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Confirmar Cadastro</button>
+                    <button type="button" class="btn btn-primary">Salvar</button>
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
 
 </body>
 </html>
