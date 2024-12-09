@@ -4,69 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Nota de Entrada</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #333;
-            color: #fff;
-        }
-        .container {
-            background-color: #aaa;
-            border-radius: 8px;
-            padding: 20px;
-            width: 80%;
-            max-width: 80%;
-            margin: 0 auto;
-        }
-        
-        h1, h2 {
-            text-align: center;
-            color: #474952;
-        }
-        .form-group label {
-            font-weight: bold;
-        }
-        .form-control {
-            background-color: #ddd;
-            border: none;
-        }
-        .form-section {
-            background-color: #444;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        .form-section h3 {
-            color: #ddd;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            font-size: 1.2em;
-        }
-        .btn-primary {
-            background-color: #5c85d6;
-            border-color: #5c85d6;
-        }
-        .btn-primary:hover {
-            background-color: #3c5bb6;
-        }
-        .btn-secondary {
-            background-color: #555;
-            border-color: #555;
-        }
-        .final-buttons {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .modal-title{
-            background-color: #aaa;
-            text-align: center;
-
-        }
-        .modal-body{
-            background-color: #333;
-           
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+    
     <script>
         function toggleFields() {
             const possuiChave = document.querySelector('input[name="chave_acesso"]:checked').value;

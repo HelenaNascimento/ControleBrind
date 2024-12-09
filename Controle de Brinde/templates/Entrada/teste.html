@@ -1,0 +1,17 @@
+{% extends 'head.djt' %}
+{% comment %} Template inherits from head.djt {% endcomment %}
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" type="text/css" href="{% static '/static/bootstrap.css' %}?version={{3}}">
+{% endblock stylesheet%}
+
+{% block body %}
+{% endblock body %}
+
+{% block scripts %}
+    <script src="{% static ''%}?version={{ js_version }}" type="module"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+{% endblock scripts %}
