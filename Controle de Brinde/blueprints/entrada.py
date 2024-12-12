@@ -43,31 +43,6 @@ def consult_fornecedor(cnxn, CNPJ_FORN):
     Dados_Fornecedor = pd.read_sql_query(query, cnxn, params=[CNPJ_FORN])
     return Dados_Fornecedor
 
-# Função para cadastrar nota de entrada
-def cad_NF_Entrada(cnxn, NF_ENT, Dat_Entrada, Qtd_Total, Vlr_Total, IdFornecedor, Vlr_Desc):
-    cursor = cnxn.cursor()
-    cursor.execute("""
-        INSERT INTO NF_CB_ENT (NF_ENT, Dat_Entrada, Qtd_Total, Vlr_Total, IdFornecedor, Vlr_Desc)
-        VALUES (?, ?, ?, ?, ?, ?)
-    """, (NF_ENT, Dat_Entrada, int(Qtd_Total), float(Vlr_Total), IdFornecedor, float(Vlr_Desc)))
-    cnxn.commit()
-
-# Função para consultar notas de entrada
-def Consulta_NF_ENT(cnxn, CNPJ_FORN):
-    query = """
-        SELECT 
-            NF_ENT,
-            Dat_Entrada,
-            Fantasia,
-            Qtd_Total,
-            Vlr_Total
-        FROM FORNE FN
-        INNER JOIN NF_CB_ENT NFE ON FN.IdFornecedor = NFE.IdFornecedor
-        WHERE FN.CNPJ_FORN = ?                  
-    """
-    Consulta_Fornecedor = pd.read_sql_query(query, cnxn, params=[CNPJ_FORN])
-    return Consulta_Fornecedor
-
 def insert_data(cnxn, Fantasia, CNPJ_FORN):
     cursor = cnxn.cursor()
     cursor.execute("""
@@ -83,6 +58,16 @@ def cad_Produto(cnxn, NF_ENT, EAN, Descricao, Quantidade, Vlr_Unit):
         VALUES (?, ?, ?, ?, ?)
     """, (NF_ENT, EAN, Descricao, int(Quantidade), float(Vlr_Unit)))
     cnxn.commit()
+
+# Função para cadastrar nota de entrada
+def cad_NF_Entrada(cnxn, NF_ENT, Dat_Entrada, Qtd_Total, Vlr_Total, IdFornecedor, Vlr_Desc):
+    cursor = cnxn.cursor()
+    cursor.execute("""
+        INSERT INTO CB_ENT (NF_ENT, Dat_Entrada, Qtd_Total, Vlr_Total, IdFornecedor, Vlr_Desc)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (NF_ENT, Dat_Entrada, int(Qtd_Total), float(Vlr_Total), IdFornecedor, float(Vlr_Desc)))
+    cnxn.commit()
+
 
 def insert_itens(cnxn, NF_ENT, Dat_Entrada, IdProduto, Qtd_Item, Vlr_Bruto, Vlr_Desc, Id_Marca, Modelo):
     cursor = cnxn.cursor()
@@ -158,13 +143,6 @@ def inserir_fornecedor():
     return redirect(url_for('entrada.Ent_CB'))
 #Alterar para tipo alerta
 
-@entrada_bp.route('/consultar_nota', methods=['POST'])
-def consultar_nota():
-    CNPJ_FORN = request.form['CNPJ_FORN']
-    cnxn = conexao()
-    nota_df = Consulta_NF_ENT(cnxn, CNPJ_FORN)
-    cnxn.close()
-    return render_template('Entrada/entrada.html', nota_df=nota_df)
 
 @entrada_bp.route('/inserir_nota', methods=['POST'])
 def inserir_nota():

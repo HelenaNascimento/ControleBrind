@@ -49,6 +49,16 @@ def obter_produto_estoque(cnxn, descricao):
 # Definindo o blueprint
 brinde_bp = Blueprint('brinde', __name__)
 
+
+#Deashboard Estoque
+
+def deash():
+    query = """
+            SELECT 
+    """
+
+
+
 # Rota principal da página de estoque
 @brinde_bp.route('/Dash_Brinde')
 def Dash_Brinde():
@@ -94,6 +104,9 @@ def consultar_produto():
         return jsonify({"erro": str(e)}), 500
     finally:
         cnxn.close()
+
+
+
 
 # Configuração da aplicação principal
 if __name__ == '__main__':
