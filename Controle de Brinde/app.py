@@ -21,7 +21,7 @@ def conexao():
         cnxn = bd.connect(f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}')
         return cnxn
     except Exception as e:
-        print(f"Erro ao conectar ao banco de dados: {e}")
+        print(f"erro 1: {e}")
         return None
 
 # Rota de login
@@ -33,7 +33,7 @@ def login():
 
         conn = conexao()
         if conn is None:
-            flash('Erro ao conectar ao banco de dados.', 'danger')
+            flash('erro2.', 'danger')
             return redirect(url_for('login'))
 
         try:
