@@ -28,7 +28,7 @@
 
                         <div class="form-group mb-3" id="campo-chave-acesso">
                             <label for="CHV_ACESSO">Chave de Acesso:</label>
-                            <input type="number" class="form-control" name="CHV_ACESSO">
+                            <input type="text" class="form-control" name="CHV_ACESSO">
                         </div>
 
                         <!-- Outros campos do formulário -->
@@ -61,14 +61,14 @@
                             <div class="row mb-3">
                                 <div class="col-md-4 form-group">
                                     <label for="Qtd_Total">Quantidade (Und):</label>
-                                    <input type="number" class="form-control" name="Qtd_Total">
+                                    <input type="text" class="form-control" name="Qtd_Total">
                                 </div>
                                 <div class="col-md-4 form-group">
                                     <label for="Vlr_Total">Valor Bruto (R$):</label>
                                     <input type="text" class="form-control" name="Vlr_Total">
                                 </div>
                                 <div class="col-md-4 form-group">
-                                    <label for="Vlr_Desc">Desconto (%):</label>
+                                    <label for="Vlr_Desc">Desconto (R$):</label>
                                     <input type="text" class="form-control" name="Vlr_Desc">
                                 </div>
                             </div>
@@ -132,11 +132,22 @@
                     </form>
 
                     <!-- Área para exibir itens inseridos -->
-                    <h3 class="mt-4">Itens Inseridos</h3>
-                    <div class="form-group">
-                        <textarea class="form-control" rows="5" readonly></textarea>
+                    <h3 class="mt-4">Itens:</h3>
+                    <div class="form-group table-responsive">
+                        <table class="table table-bordered" id="itens-table">
+                            <thead>
+                                <tr>
+                                    <th>ID_PROD</th>
+                                    <th>Descricao</th>
+                                    <th>Qtd_Item</th>
+                                    <th>Vlr_Liquido</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Os dados do estoque serão inseridos aqui via JavaScript -->
+                            </tbody>
+                        </table>
                     </div>
-
                     <div class="final-buttons">
                         <button type="button" class="btn btn-primary">Finalizar</button>
                         <button type="button" class="btn btn-secondary">Cancelar</button>
