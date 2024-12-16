@@ -5,19 +5,157 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Nota de Entrada</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="Static/CSS/styles.css">
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+        }
+        .container {
+            background-color: #aaa;
+            border-radius: 8px;
+            padding: 20px;
+            width: 80%;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+        
+        h1, h2 {
+            text-align: center;
+            color: #474952;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-control {
+            background-color: #ddd;
+            border: none;
+        }
+        .form-section {
+            background-color: #444;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .form-section h3 {
+            color: #ddd;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-size: 1.2em;
+        }
+        .btn-primary {
+            background-color: #5c85d6;
+            border-color: #5c85d6;
+        }
+        .btn-primary:hover {
+            background-color: #3c5bb6;
+        }
+        .btn-secondary {
+            background-color: #555;
+            border-color: #555;
+        }
+        .final-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .modal-title{
+            background-color: #aaa;
+            text-align: center;
+        
+        }
+        .modal-body{
+            background-color: #333;
+            
+        }
+    </style>
+    <script>
+        function toggleFields() {
+            const possuiChave = document.querySelector('input[name="chave_acesso"]:checked').value;
+            
+            const chaveAcessoField = document.querySelector('input[name="CHV_ACESSO"]');
+            const numeroNotaField = document.querySelector('input[name="NF_ENTRADA"]');
+            const dataEmissaoField = document.querySelector('input[name="Dat_Entrada"]');
+            const cnpjFornecedorField = document.querySelector('input[name="CNPJ_FORN"]');
+        
+            if (possuiChave === 'sim') {
+                chaveAcessoField.disabled = false;
+                numeroNotaField.disabled = true;
+                cnpjFornecedorField.disabled = true;
+            } else {
+                chaveAcessoField.disabled = true;
+                numeroNotaField.disabled = false;
+                cnpjFornecedorField.disabled = false;
+            }
+        }
+
+        function toggleChaveAcesso() {
+            const sim = document.getElementById('chave-sim').checked;
+            const campoChave = document.getElementById('campo-chave-acesso');
+            if (sim) {
+                campoChave.style.display = 'block';
+            } else {
+                campoChave.style.display = 'none';
+            }
+        }
+ 
+        // Esconde o campo inicialmente se "Não" for a opção padrão
+        window.onload = function() {
+            toggleChaveAcesso();
+        };
+
+        function toggleFields_cad() {
+            // Verifica qual botão de rádio está selecionado
+            const compraWeb = document.querySelector('input[name="compra"][value="Web"]').checked;
+            const webField = document.getElementById("webField");
+            const addressFields = document.getElementById("addressFields");
+
+            // Alterna a exibição dos campos com base no valor
+            if (compraWeb) {
+                webField.style.display = "block";
+                addressFields.style.display = "none";
+            } else {
+                webField.style.display = "none";
+                addressFields.style.display = "block";
+            }
+        }
+
+        // Chamado ao carregar a página
+        document.addEventListener("DOMContentLoaded", function () {
+            toggleFields(); // Inicializa os campos
+            toggleFields_cad(); // Inicializa os campos de cadastro
+
+            // Adiciona eventos aos botões de rádio
+            document.querySelectorAll('input[name="chave_acesso"]').forEach((radio) => {
+                radio.addEventListener("change", toggleFields);
+            });
+        });
+
+        function cad_forne() {
+            // Fecha qualquer modal ativo e abre o modal de fornecedor
+            $('.modal').modal('hide');
+            $('#cadastrarFornecedor').modal('show');
+        }
+        
+        function cad_prod() {
+            // Fecha qualquer modal ativo e abre o modal de produto
+            $('.modal').modal('hide');
+            $('#cadastrarProduto').modal('show');
+        }
+        
+    </script>
+
 </head>
 
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">Cadastro de Nota de Entrada</h1>
-
+        <h1>Cadastro de Nota de Entrada</h1>
+        
+        <!-- Row para alinhar cabeçalho e itens lado a lado -->
         <div class="row">
+            <!-- Seção do cabeçalho da nota -->
             <div class="col-md-6">
                 <div class="form-section">
                     <h3>Cabeçalho Nota de Entrada</h3>
                     <form action="{{ url_for('entrada.consultar_fornecedor') }}" method="post">
-                        <!-- Seção de Chave de Acesso -->
                         <div class="form-group">
                             <label>Possui Chave de Acesso?</label>
                             <div>
@@ -25,13 +163,10 @@
                                 <input type="radio" name="chave_acesso" value="nao" id="chave-nao" onclick="toggleChaveAcesso()"> Não
                             </div>
                         </div>
-
                         <div class="form-group mb-3" id="campo-chave-acesso">
-                            <label for="CHV_ACESSO">Chave de Acesso:</label>
-                            <input type="text" class="form-control" name="CHV_ACESSO">
+                            <label for="in_chav_acesso">Chave de Acesso:</label>
+                            <input type="number" class="form-control" name="CHV_ACESSO">
                         </div>
-
-                        <!-- Outros campos do formulário -->
                         <div class="row mb-3">
                             <div class="col-md-4 form-group">
                                 <label for="NF_ENTRADA">Número Nota:</label>
@@ -46,13 +181,12 @@
                                 <input type="text" class="form-control" name="CNPJ_FORN" value="{{ dados.get('CNPJ_FORN', '') }}">
                             </div>
                         </div>
-
+                        
                         <div class="form-group">
                             <label for="Fantasia">Razão Social:</label>
                             <input type="text" class="form-control" name="Fantasia" value="{{ dados.get('Fantasia', '') }}">
-                        </div>
-
-                        <div class="final-buttons text-center">
+                        </div>                                               
+                        <div class="final-buttons">
                             <button type="submit" class="btn btn-primary">Consultar</button>
                             <button type="button" class="btn btn-primary" onclick="cad_forne()">Cadastrar</button>
                         </div>
@@ -112,14 +246,14 @@
                             <div class="row mb-3">
                                     <div class="col-md-4 form-group">
                                         <label for="Qtd_Item">Quantidade (Und):</label>
-                                        <input type="number" class="form-control" name="Qtd_Item">
+                                        <input type="text" class="form-control" name="Qtd_Item">
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <label for="Vlr_Bruto">Valor Bruto (R$):</label>
                                         <input type="text" class="form-control" name="Vlr_Bruto">
                                     </div>
                                     <div class="col-md-4 form-group">
-                                        <label for="Vlr_Desc">Desconto (%):</label>
+                                        <label for="Vlr_Desc">Desconto (R$):</label>
                                         <input type="text" class="form-control" name="Vlr_Desc">
                                     </div>
                             </div>
@@ -132,22 +266,11 @@
                     </form>
 
                     <!-- Área para exibir itens inseridos -->
-                    <h3 class="mt-4">Itens:</h3>
-                    <div class="form-group table-responsive">
-                        <table class="table table-bordered" id="itens-table">
-                            <thead>
-                                <tr>
-                                    <th>ID_PROD</th>
-                                    <th>Descricao</th>
-                                    <th>Qtd_Item</th>
-                                    <th>Vlr_Liquido</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Os dados do estoque serão inseridos aqui via JavaScript -->
-                            </tbody>
-                        </table>
+                    <h3 class="mt-4">Itens Inseridos</h3>
+                    <div class="form-group">
+                        <textarea class="form-control" rows="5" readonly></textarea>
                     </div>
+
                     <div class="final-buttons">
                         <button type="button" class="btn btn-primary">Finalizar</button>
                         <button type="button" class="btn btn-secondary">Cancelar</button>
@@ -272,7 +395,7 @@
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="Static/JS/scripts.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+
 </body>
 </html>

@@ -82,7 +82,7 @@ def cad_NF_Entrada(cnxn, NF_ENT, Dat_Entrada, Qtd_Total, Vlr_Total, IdFornecedor
 # Definindo o blueprint
 entrada_bp = Blueprint('entrada', __name__)
 
-@entrada_bp.route('/Ent_CB')
+@entrada_bp.route('/EntradaNota=?0001')
 def Ent_CB():
     if 'user_id' not in session:
         flash('Por favor, faça o login primeiro.', 'warning')
@@ -97,7 +97,7 @@ def Ent_CB():
 
 
 
-@entrada_bp.route('/consultar_fornecedor', methods=['POST'])
+@entrada_bp.route('/EntradaNota=?0002', methods=['POST'])
 def consultar_fornecedor():
     chave_acesso = request.form.get('chave_acesso')  # Verifica se "Sim" ou "Não"
     dados = {
@@ -134,7 +134,7 @@ def consultar_fornecedor():
 
 
 
-@entrada_bp.route('/inserir_fornecedor', methods=['POST'])
+@entrada_bp.route('/EntradaNota=?0003', methods=['POST'])
 def inserir_fornecedor():
     Fantasia = request.form['Fantasia']
     CNPJ_FORN = request.form['CNPJ_FORN']
@@ -145,7 +145,7 @@ def inserir_fornecedor():
     return redirect(url_for('entrada.Ent_CB'))
 #Alterar para tipo alerta
 
-@entrada_bp.route('/inserir_item', methods=['POST'])
+@entrada_bp.route('/EntradaNota=?0004', methods=['POST'])
 def inserir_item():
     NF_ENT = request.form['NF_ENT']
     EAN = request.form['EAN']
@@ -161,7 +161,7 @@ def inserir_item():
     return redirect(url_for('entrada.Ent_CB'))
 
 
-@entrada_bp.route('/inserir_nota', methods=['POST'])
+@entrada_bp.route('/EntradaNota=?0005', methods=['POST'])
 def inserir_nota():
     NF_ENT = request.form['NF_ENT']
     Dat_Entrada = request.form['Dat_Entrada']
