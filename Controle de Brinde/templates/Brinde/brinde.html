@@ -40,6 +40,60 @@
         }
 
     </style>
+    <script>
+
+         // Função para carregar o estoque disponível
+        window.onload = function() {
+                fetch("{{ url_for('brinde.estoque_positivo') }}", {
+                    method: "POST"
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const estoqueTable = document.getElementById("estoque-table").getElementsByTagName("tbody")[0];
+                    estoqueTable.innerHTML = ""; // Limpar a tabela
+
+                    data.estoque.forEach(item => {
+                        const row = estoqueTable.insertRow();
+                        row.insertCell(0).textContent = item.ID_PROD;
+                        row.insertCell(1).textContent = item.EAN;
+                        row.insertCell(2).textContent = item.Descricao;
+                        row.insertCell(3).textContent = item.Qtd_Dispon;
+                        row.insertCell(4).textContent = item.Marca;
+                        
+                        // Adicionando o botão de rádio na nova coluna
+                        const radioCell = row.insertCell(5);
+                        const radioButton = document.createElement("input");
+                        radioButton.type = "radio";
+                        radioButton.name = "produto_selecionado"; // Mesmo nome para garantir que só um item pode ser selecionado
+                        radioButton.value = item.ID_PROD; // O valor será o ID do produto
+                        radioCell.appendChild(radioButton);
+                    });
+                })
+                .catch(error => console.error("Erro ao carregar o estoque:", error));
+        };
+
+        document.getElementById("consulta-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            const descricao = document.getElementById("descricao-input").value;
+
+            fetch("{{ url_for('brinde.consultar_produto') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `Descricao=${encodeURIComponent(descricao)}`
+            })
+            .then(response => response.text())  // Recebe o HTML em vez de JSON
+            .then(html => {
+                const estoqueTable = document.getElementById("estoque-table").getElementsByTagName("tbody")[0];
+                estoqueTable.innerHTML = html; // Substitui o conteúdo da tabela com o HTML retornado
+            })
+            .catch(error => {
+                console.error("Erro ao consultar o produto:", error);
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="container mt-5">
@@ -48,80 +102,55 @@
             <!-- Consulta Produto -->
             <div class="col-md-6">
                 <div class="form-section">           
-                    <form action="{{ url_for('brinde.consultar_produto') }}" method="post">
+                    <form id="consulta-form" action="{{ url_for('brinde.estoque_positivo') }}" method="post">
                         <div class="form-group">
-                            <label for="Descricao">Descrição:</label>
-                            <input type="text" class="form-control" name="Descricao">
+                            <label for="descricao-input">Descrição:</label>
+                            <input type="text" class="form-control" id="descricao-input" name="Descricao">
                         </div>
                         <div class="final-buttons">
                             <button type="submit" class="btn btn-primary">Consultar</button>
                             <button type="button" class="btn btn-secondary">Cadastrar</button>
                         </div>
-                    </form>
-                    
+                    </form>                                     
                     <!-- Área para exibir lista de itens -->
                     <h3 class="mt-4">Itens:</h3>
                     <div class="form-group table-responsive">
                         <table class="table table-bordered" id="estoque-table">
                             <thead>
                                 <tr>
-                                    <th>ID_PROD</th>
-                                    <th>Descricao</th>
-                                    <th>Qtd_Dispon</th>
+                                    <th>Id_Produto</th>
+                                    <th>EAN</th>
+                                    <th>Descrição</th>
+                                    <th>Disponivel</th>
                                     <th>Marca</th>
-                                    <th></th> <!-- Nova coluna para o botão de rádio -->
+                                    <th></th> <!-- Coluna para o botão de rádio -->
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Os dados do estoque serão inseridos aqui via JavaScript -->
+                                <!-- Os dados da consulta serão inseridos aqui via JavaScript -->
                             </tbody>
-                        </table>
+                        </table>                        
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="col-md-6">
                     <div class="form-section">           
-                        <form action="{{ url_for('brinde.consultar_produto') }}" method="post">
+                        <form action="{{ url_for('brinde.retonadeash') }}" method="post">
                             <div class="form-group">
                                 <label for="Descricao">Deashboard:</label>
                             </div>
                         </form>
+                        <form action="{{ url_for('brinde.retonadeash') }}" method="post">
+                            <div class="form-group">
+                                <label>Para mais <a href="http://localhost:8501" target="_blank">Acesse aqui</a>.</label>
+                            </div>
+                        </form>                        
                     </div>
                 </div>
             </div>    
         </div>
     </div>
     
-    <script>
-        // Função para carregar o estoque disponível
-        window.onload = function() {
-            fetch("{{ url_for('brinde.estoque_positivo') }}", {
-                method: "POST"
-            })
-            .then(response => response.json())
-            .then(data => {
-                const estoqueTable = document.getElementById("estoque-table").getElementsByTagName("tbody")[0];
-                estoqueTable.innerHTML = ""; // Limpar a tabela
-
-                data.estoque.forEach(item => {
-                    const row = estoqueTable.insertRow();
-                    row.insertCell(0).textContent = item.ID_PROD;
-                    row.insertCell(1).textContent = item.Descricao;
-                    row.insertCell(2).textContent = item.Qtd_Dispon;
-                    row.insertCell(3).textContent = item.Marca;
-                    
-                    // Adicionando o botão de rádio na nova coluna
-                    const radioCell = row.insertCell(4);
-                    const radioButton = document.createElement("input");
-                    radioButton.type = "radio";
-                    radioButton.name = "produto_selecionado"; // Mesmo nome para garantir que só um item pode ser selecionado
-                    radioButton.value = item.ID_PROD; // O valor será o ID do produto
-                    radioCell.appendChild(radioButton);
-                });
-            })
-            .catch(error => console.error("Erro ao carregar o estoque:", error));
-        };
-    </script>
 </body>
 </html>

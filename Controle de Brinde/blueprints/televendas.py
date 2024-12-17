@@ -7,16 +7,15 @@ app.secret_key = "supersecretkey"
 
 def conexao():
     try:
-        server = 'WIN11\\DEV' #'WIN11\\DEV' #'SRVHOSTHPNEW'
+        server = 'SRVHOSTHPNEW' #'WIN11\\DEV' #'SRVHOSTHPNEW'
         database = 'BD_BRIND'
         username = 'sa'
-        password = 'senha@123' #'senha@123' #Infarma@2016.
+        password = 'Infarma@2016.' #'senha@123' #Infarma@2016.
         cnxn = bd.connect(f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}')
         return cnxn
     except Exception as e:
         print(f"Erro ao conectar ao banco de dados: {e}")
         return None
-
 
 # Função para obter o estoque disponível
 def todo_estoque_positivo(cnxn):
@@ -60,6 +59,13 @@ def estoque_positivo():
         return jsonify({"erro": str(e)}), 500
     finally:
         cnxn.close()
+
+
+@televendas_bp.route('/logout')
+def logout():
+    logout_user()
+    flash('Logout realizado com sucesso!', 'success')
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.register_blueprint(televendas_bp)  # Registrando o blueprint

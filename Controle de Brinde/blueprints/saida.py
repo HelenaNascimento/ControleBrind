@@ -7,16 +7,15 @@ app.secret_key = "supersecretkey"
 
 def conexao():
     try:
-        server = 'WIN11\\DEV' #'WIN11\\DEV' #'SRVHOSTHPNEW'
+        server = 'SRVHOSTHPNEW' #'WIN11\\DEV' #'SRVHOSTHPNEW'
         database = 'BD_BRIND'
         username = 'sa'
-        password = 'senha@123' #'senha@123' #Infarma@2016.
+        password = 'Infarma@2016.' #'senha@123' #Infarma@2016.
         cnxn = bd.connect(f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}')
         return cnxn
     except Exception as e:
         print(f"Erro ao conectar ao banco de dados: {e}")
         return None
-
 
 # Definindo o blueprint
 saida_bp = Blueprint('saida', __name__)
@@ -29,6 +28,11 @@ def Sai_CB():
     return render_template('Saida/saida.html')
 
 
+@saida_bp.route('/logout')
+def logout():
+    logout_user()
+    flash('Logout realizado com sucesso!', 'success')
+    return redirect(url_for('login'))
 
 
 if __name__ == '__main__':
