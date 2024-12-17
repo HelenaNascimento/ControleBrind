@@ -316,48 +316,42 @@
                     
                     <!-- Campos para endereço do fornecedor -->
                     <div id="addressFields" style="display: none;">
+                        <div >                       
+                            <label for="rua">Rua:</label>
+                            <input type="text" class="form-control" name="rua">
+                        </div>
                         <div class="form-group mb-3">
                             <div class="row mb-3">
-                                <div class="col-md-4 form-group">                       
-                                    <label for="rua">Rua:</label>
-                                    <input type="text" class="form-control" name="rua">
-                                </div>
                                 <div class="col-md-4 form-group">                       
                                     <label for="rua">Nº:</label>
                                     <input type="text" class="form-control" name="numero">
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group mb-3">
-                            <div class="row mb-3">
                                 <div class="col-md-4 form-group">                           
                                     <label for="bairro">Bairro:</label>
                                     <input type="text" class="form-control" name="bairro">
                                 </div>
-                                <div class="col-md-4 form-group">  
-                                    <label for="estado">Complemento:</label>
-                                    <input type="text" class="form-control" name="complemento">
-                                </div>                                   
                             </div>
                         </div>
+                        <div>  
+                            <label for="estado">Complemento:</label>
+                            <input type="text" class="form-control" name="complemento">
+                        </div>                                   
                         <div class="form-group mb-3">
                             <div class="row mb-3">
-                                <div class="col-md-4 form-group">  
+                                <div class="col-md-4 form-group"> 
                                     <label for="cidade">Cidade:</label>
                                     <input type="text" class="form-control" name="cidade">
+
                                 </div>
+                                <div class="col-md-4 form-group">  
+                                    <button type="button" class="btn btn-primary">...</button>
+                                </div>                   
                                 <div class="col-md-4 form-group">                         
                                     <label for="estado">Estado(UF):</label>
                                     <input type="text" class="form-control" name="estado">
                                 </div>
-                                <div class="col-md-4 form-group">   
-                                    <label for="cep">CEP:</label>
-                                    <input type="text" class="form-control" name="cep">                            
-                                </div>
-                            </div>                            
-                        <div>
-                    </div>
-                </div>
+                            </div>
+                        </div>
                     </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

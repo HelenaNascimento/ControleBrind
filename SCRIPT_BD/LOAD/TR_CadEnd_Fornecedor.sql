@@ -1,0 +1,15 @@
+CREATE TRIGGER [dbo].TR_CadEnd_Fornecedor ON [dbo].WEB WITH ENCRYPTION
+FOR INSERT
+NOT FOR REPLICATION
+AS
+
+-- comando p/ corrigir erro delphi/ado: record was changed by another user
+SET NOCOUNT ON 
+DECLARE 
+	@ID_FORN VARCHAR(80),
+	@TEL NUMERIC (11),
+	@ID_LOG INT,
+	@ID_WEB INT
+
+	INSERT ENTXEND (ID_FORN, TEL, ID_LOG, ID_WEB)
+	VALUES (@ID_FORN, @TEL, @ID_LOG, @ID_WEB)
