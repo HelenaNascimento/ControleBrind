@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "vpn.novadistribuidorane.com.br.md",
+                "file": "Blank/2025-01-02.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "vpn.novadistribuidorane.com.br"
+              "title": "2025-01-02"
             }
           }
         ]
@@ -158,11 +158,12 @@
       "command-palette:Abrir paleta de comandos": false
     }
   },
-  "active": "65aa2ae0821d7acd",
+  "active": "81974f1d322f89bb",
   "lastOpenFiles": [
+    "Blank/2025-01-02.md",
     "vpn.novadistribuidorane.com.br.md",
-    "Sem título",
-    "Entrada",
+    "Blank",
+    "Proj Controle Brinde",
     "Welcome.md",
     "Sem título.canvas",
     "2024-12-27.md"
