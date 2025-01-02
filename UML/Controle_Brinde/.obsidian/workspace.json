@@ -11,10 +11,14 @@
             "id": "65aa2ae0821d7acd",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "vpn.novadistribuidorane.com.br.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "Nova aba"
+              "title": "vpn.novadistribuidorane.com.br"
             }
           }
         ]
@@ -154,8 +158,10 @@
       "command-palette:Abrir paleta de comandos": false
     }
   },
-  "active": "81974f1d322f89bb",
+  "active": "65aa2ae0821d7acd",
   "lastOpenFiles": [
+    "vpn.novadistribuidorane.com.br.md",
+    "Sem título",
     "Entrada",
     "Welcome.md",
     "Sem título.canvas",
