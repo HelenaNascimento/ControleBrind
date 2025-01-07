@@ -9,10 +9,10 @@ app.secret_key = "supersecretkey"
 
 def conexao():
     try:
-        server = 'SRVHOSTHPNEW' #'WIN11\\DEV' #'SRVHOSTHPNEW'
+        server = 'WIN11\\DEV' #'WIN11\\DEV' #'SRVHOSTHPNEW'
         database = 'BD_BRIND'
         username = 'sa'
-        password = 'Infarma@2016.' #'senha@123' #Infarma@2016.
+        password = 'senha@123' #'senha@123' #Infarma@2016.
         cnxn = bd.connect(f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}')
         return cnxn
     except Exception as e:
@@ -190,6 +190,10 @@ def logout():
     logout_user()
     flash('Logout realizado com sucesso!', 'success')
     return redirect(url_for('login'))
+
+@entrada_bp.route('/logoff')
+def logoff():
+    return redirect(url_for('login.log_CB'))
 
 if __name__ == '__main__':
     app.register_blueprint(entrada_bp)  # Registrando o blueprint
