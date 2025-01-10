@@ -11,7 +11,7 @@ app.secret_key = "supersecretkey"
 def conexao():
     try:
         server = 'TECHNICAL\\DEV' #'WIN11\\DEV' #'SRVHOSTHPNEW' #'TECHNICAL\\DEV'
-        database = 'BD_BRINDE' #BD_BRINDE
+        database = 'BD_BRIND' #BD_BRINDE
         username = 'sa'
         password = 'senha@123' #'senha@123' #Infarma@2016.
         cnxn = bd.connect(f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}')
