@@ -136,10 +136,11 @@
         }
         
         function cad_prod() {
-            // Fecha qualquer modal ativo e abre o modal de produto
-            $('.modal').modal('hide');
-            $('#cadastrarProduto').modal('show');
+            console.log('Função cad_prod chamada'); // Debug
+            $('.modal').modal('hide'); // Fecha outros modais
+            $('#cadastrarProduto').modal('show'); // Abre o modal de produto
         }
+        
         
     </script>
 
@@ -242,7 +243,7 @@
 
                         <div class="final-buttons">
                             <button type="button" class="btn btn-primary">Consultar</button>
-                            <button type="button" class="btn btn-primary" onclick="$('#cadastrarProduto').modal('show')">Cadastrar</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cadastrarProduto">Cadastrar</button>
                         </div>
                         <br>
                         <div class="form-group mb-3">
@@ -366,11 +367,11 @@
         </div>
     </div>
     <!-- Modal - Cadastrar Produto -->
-    <div class="modal fade" id="cadastrarProduto" tabindex="-1" role="dialog" aria-labelledby="cadastrarprodModalLabel" aria-hidden="true">
+    <div class="modal fade" id="cadastrarProduto" tabindex="-1" role="dialog" aria-labelledby="cadastrarModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="cadastrarprodModalLabel">Cadastrar</h5>
+                    <h5 class="modal-title" id="cadastrarModalLabel">Cadastrar</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

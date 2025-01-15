@@ -32,14 +32,16 @@ def consult_chave(cnxn, CHV_ACESSO):
 
 # Função para consultar fornecedor
 def consult_fornecedor(cnxn, CNPJ_FORN):
-    query = """
+    cursor = cnxn.cursor()
+    cursor.execute("""
         SELECT 
             IdFornecedor,
             Fantasia 
         FROM FORNE
         WHERE CNPJ_FORN = ?
-    """
-    Dados_Fornecedor = pd.read_sql_query(query, cnxn, params=[CNPJ_FORN])
+    """)
+    cnxn.commit()
+    Dados_Fornecedor = pd.read_sql_query(cnxn, params=[CNPJ_FORN])
     return Dados_Fornecedor
 
 def insert_data(cnxn, Fantasia, CNPJ_FORN):
@@ -61,9 +63,8 @@ def cad_Produto(cnxn, NF_ENT, EAN, Descricao, Quantidade, Vlr_Unit):
 
 def insert_itens(cnxn, NF_ENT, Dat_Entrada, IdProduto, Qtd_Item, Vlr_Bruto, Vlr_Desc, Id_Marca, Modelo):
     cursor = cnxn.cursor()
-    cursor.execute("""
-                   INSERT INTO ID_IT_ENT (NF_ENT, Dat_Entrada, IdProduto, Qtd_Item, Vlr_Bruto, Vlr_Desc, Id_Marca, Modelo)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    cursor.execute("""                    
+                    exec dbo.PR_InserirItensNota @IdNota_Ent = ?, @NF_Ent = ?, @Dat_Entrada = ?, @IdProduto = ?, @Qtd_Item = ?, @Vlr_Bruto = ?, @Vlr_Desc = ?, @Id_Marca = ?, @Modelo = ?
                    """, (NF_ENT, Dat_Entrada, int(IdProduto), int(Qtd_Item), float(Vlr_Bruto), float(Vlr_Desc), int(Id_Marca), Modelo))
     cnxn.commit()
 
@@ -72,8 +73,7 @@ def insert_itens(cnxn, NF_ENT, Dat_Entrada, IdProduto, Qtd_Item, Vlr_Bruto, Vlr_
 def cad_NF_Entrada(cnxn, NF_ENT, Dat_Entrada, Qtd_Total, Vlr_Total, IdFornecedor, Vlr_Desc):
     cursor = cnxn.cursor()
     cursor.execute("""
-        INSERT INTO CB_ENT (NF_ENT, Dat_Entrada, Qtd_Total, Vlr_Total, IdFornecedor, Vlr_Desc)
-        VALUES (?, ?, ?, ?, ?, ?)
+            exec dbo.PR_InserirNotaFiscal @Num_Nota = ?, @Chv_Acesso = ?, @Dat_Entrada = ?, @ID_FORN = ?,  @VLR_B = ?, @VLR_D = ?, @PER_DES = ?, @OUTR = ?, @QTD_T = ?, @VLR_T = ?, @OBS = ?
     """, (NF_ENT, Dat_Entrada, int(Qtd_Total), float(Vlr_Total), IdFornecedor, float(Vlr_Desc)))
     cnxn.commit()
 
