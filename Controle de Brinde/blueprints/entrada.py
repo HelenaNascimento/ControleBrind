@@ -28,8 +28,6 @@ def consult_chave(cnxn, CHV_ACESSO):
     Dados_ChvAcesso = pd.read_sql_query(query, cnxn, params=[CHV_ACESSO])
     return Dados_ChvAcesso
 
-
-
 # Função para consultar fornecedor
 def consult_fornecedor(cnxn, CNPJ_FORN):
     cursor = cnxn.cursor()
@@ -44,13 +42,21 @@ def consult_fornecedor(cnxn, CNPJ_FORN):
     Dados_Fornecedor = pd.read_sql_query(cnxn, params=[CNPJ_FORN])
     return Dados_Fornecedor
 
-def insert_data(cnxn, Fantasia, CNPJ_FORN):
+#Inserir Dados de Forncedor
+def insert_data(cnxn, FLG_COMPRA):
     cursor = cnxn.cursor()
-    cursor.execute("""
-        INSERT INTO FORNE (Fantasia, CNPJ_FORN)
-        VALUES(?, ?)""", (Fantasia, CNPJ_FORN))
-    cnxn.commit()
-
+    
+    if FLG_COMPRA == 1:
+        cursor.execute("""
+                exec PR_CadastrarFornecedor @Razao_Social = ? , @CNPJ = ?, @FLG_COMPRA = ?, @SITE = ?, @IdBair = ?, @IdCid = ?, @IdEst = ?, @UF = ?, @Rua = ?, @Numero = ?, @Complemento = ?
+        """, (FLG_COMPRA))
+        cnxn.commit()
+    else:
+        cursor.execute("""
+                exec PR_CadastrarFornecedor @Razao_Social = ? , @CNPJ = ?, @FLG_COMPRA = ?, @SITE = ?, @IdBair = ?, @IdCid = ?, @IdEst = ?, @UF = ?, @Rua = ?, @Numero = ?, @Complemento = ?
+        """, (FLG_COMPRA))
+        cnxn.commit()
+    
 # Função para cadastrar produto
 def cad_Produto(cnxn, NF_ENT, EAN, Descricao, Quantidade, Vlr_Unit):
     cursor = cnxn.cursor()
