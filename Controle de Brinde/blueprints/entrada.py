@@ -1,7 +1,8 @@
-from flask import Flask, Blueprint, render_template, session, redirect, url_for, flash, request
+from flask import Flask, Blueprint, render_template, session, redirect, url_for, flash, request, jsonify
 import pyodbc as bd
 import pandas as pd
 import xml as xml
+
 
 
 app = Flask(__name__)
@@ -42,20 +43,44 @@ def consult_fornecedor(cnxn, CNPJ_FORN):
     Dados_Fornecedor = pd.read_sql_query(cnxn, params=[CNPJ_FORN])
     return Dados_Fornecedor
 
-#Inserir Dados de Forncedor
+# Inserir Dados de Fornecedor
 def insert_data(cnxn, FLG_COMPRA):
+    def insert_data():
+        """Função para coletar dados adicionais dependendo da compra."""
+        if FLG_COMPRA == 1:  # Compra online
+            print("Compra online selecionada.")
+            site = input("Digite o site: ")
+            complemento = input("Digite o complemento: ")
+        else:  # Compra física
+            print("Compra física selecionada.")
+            site = None
+            complemento = input("Digite o complemento: ")
+        return site, complemento
+
+    # Coleta os dados adicionais
+    site, complemento = insert_data()
+
+    # Outros dados necessários
+    razao_social = input("Digite a razão social: ")
+    cnpj = input("Digite o CNPJ: ")
+    nome_bairro = input("Digite o ID do bairro: ")
+    nome_cidade = input("Digite o ID da cidade: ")
+    uf = input("Digite a UF: ")
+    rua = input("Digite a rua: ")
+    numero = input("Digite o número: ")
+
+    # Insere os dados no banco
     cursor = cnxn.cursor()
-    
-    if FLG_COMPRA == 1:
-        cursor.execute("""
-                exec PR_CadastrarFornecedor @Razao_Social = ? , @CNPJ = ?, @FLG_COMPRA = ?, @SITE = ?, @IdBair = ?, @IdCid = ?, @IdEst = ?, @UF = ?, @Rua = ?, @Numero = ?, @Complemento = ?
-        """, (FLG_COMPRA))
-        cnxn.commit()
-    else:
-        cursor.execute("""
-                exec PR_CadastrarFornecedor @Razao_Social = ? , @CNPJ = ?, @FLG_COMPRA = ?, @SITE = ?, @IdBair = ?, @IdCid = ?, @IdEst = ?, @UF = ?, @Rua = ?, @Numero = ?, @Complemento = ?
-        """, (FLG_COMPRA))
-        cnxn.commit()
+    cursor.execute("""
+        exec PR_CadastrarFornecedor 
+        @Razao_Social = ?, @CNPJ = ?, @FLG_COMPRA = ?, 
+        @SITE = ?, @IdBair = ?, @IdCid = ?, 
+        @IdEst = ?, @UF = ?, @Rua = ?, @Numero = ?, 
+        @Complemento = ?
+    """, (razao_social, cnpj, FLG_COMPRA, site, nome_bairro, nome_cidade, uf, rua, numero, complemento))
+    cnxn.commit()
+    print("Dados inseridos com sucesso!")
+
     
 # Função para cadastrar produto
 def cad_Produto(cnxn, NF_ENT, EAN, Descricao, Quantidade, Vlr_Unit):
@@ -85,9 +110,9 @@ def cad_NF_Entrada(cnxn, NF_ENT, Dat_Entrada, Qtd_Total, Vlr_Total, IdFornecedor
 
 
 # Definindo o blueprint
-entrada_bp = Blueprint('entrada', __name__)
+entrada_bp = Blueprint('EntradaNota', __name__)
 
-@entrada_bp.route('/EntradaNota=?0001')
+@entrada_bp.route('/0001')
 def Ent_CB():
     if 'user_id' not in session:
         flash('Por favor, faça o login primeiro.', 'warning')
@@ -102,7 +127,7 @@ def Ent_CB():
 
 
 
-@entrada_bp.route('/EntradaNota=?0002', methods=['POST'])
+@entrada_bp.route('/0002', methods=['POST'])
 def consultar_fornecedor():
     chave_acesso = request.form.get('chave_acesso')  # Verifica se "Sim" ou "Não"
     dados = {
@@ -138,35 +163,75 @@ def consultar_fornecedor():
     return render_template('Entrada/entrada.html', dados=dados)
 
 
+@entrada_bp.route('/0003', methods=['POST'])
+def insert_data():
+    try:
+        # Validate and convert input data
+        if not all(field in request.form for field in ['FLG_COMPRA', 'Razao_Social', 'CNPJ']):
+            return jsonify({"erro": "Campos obrigatórios faltando"}), 400
+            
+        FLG_COMPRA = int(request.form.get('FLG_COMPRA', 0))
+        razao_social = request.form.get('Razao_Social').strip()
+        cnpj = request.form.get('CNPJ').strip()
+        site = request.form.get('SITE').strip() if FLG_COMPRA == 1 else None
+        id_bair = int(request.form.get('IdBair', 0))
+        id_cid = int(request.form.get('IdCid', 0))
+        id_est = int(request.form.get('IdEst', 0))
+        uf = request.form.get('UF', '').strip()
+        rua = request.form.get('Rua', '').strip()
+        numero = request.form.get('Numero', '').strip()
+        complemento = request.form.get('Complemento', '').strip()
 
-@entrada_bp.route('/EntradaNota=?0003', methods=['POST'])
-def inserir_fornecedor():
-    Fantasia = request.form['Fantasia']
-    CNPJ_FORN = request.form['CNPJ_FORN']
-    cnxn = conexao()
-    insert_data(cnxn, Fantasia, CNPJ_FORN)
-    cnxn.close()
-    flash('Dados do fornecedor inseridos com sucesso!')
-    return redirect(url_for('entrada.Ent_CB'))
-#Alterar para tipo alerta
+        # Validate CNPJ format
+        if not cnpj or len(cnpj.replace('.','').replace('/','').replace('-','')) != 14:
+            return jsonify({"erro": "CNPJ inválido"}), 400
 
-@entrada_bp.route('/EntradaNota=?0004', methods=['POST'])
+        with conexao() as cnxn:
+            with cnxn.cursor() as cursor:
+                cursor.execute("""
+                    exec PR_CadastrarFornecedor 
+                    @Razao_Social = ?, @CNPJ = ?, @FLG_COMPRA = ?, 
+                    @SITE = ?, @IdBair = ?, @IdCid = ?, 
+                    @IdEst = ?, @UF = ?, @Rua = ?, @Numero = ?, 
+                    @Complemento = ?
+                """, (razao_social, cnpj, FLG_COMPRA, site, id_bair, id_cid, 
+                      id_est, uf, rua, numero, complemento))
+                cnxn.commit()
+                
+        return jsonify({"mensagem": "Fornecedor cadastrado com sucesso!"}), 201
+        
+    except ValueError as ve:
+        return jsonify({"erro": f"Erro de validação: {str(ve)}"}), 400
+    except Exception as e:
+        return jsonify({"erro": f"Erro ao cadastrar fornecedor: {str(e)}"}), 500
+
+@entrada_bp.route('/0004', methods=['POST'])
 def inserir_item():
-    NF_ENT = request.form['NF_ENT']
-    EAN = request.form['EAN']
-    Descricao = request.form['Descricao']
-    Quantidade = request.form['Quantidade']
-    Vlr_Unit = request.form['Vlr_Unit']
-    
-    cnxn = conexao()
-    cad_Produto(cnxn, NF_ENT, EAN, Descricao, Quantidade, Vlr_Unit)
-    cnxn.close()
-    
-    flash('Item inserido com sucesso!')
-    return redirect(url_for('entrada.Ent_CB'))
+    try:
+        # Validate required fields
+        required_fields = ['NF_ENT', 'EAN', 'Descricao', 'Quantidade', 'Vlr_Unit']
+        if not all(field in request.form for field in required_fields):
+            return jsonify({"erro": "Campos obrigatórios faltando"}), 400
+
+        # Convert and validate numeric inputs
+        NF_ENT = request.form['NF_ENT'].strip()
+        EAN = request.form['EAN'].strip()
+        Descricao = request.form['Descricao'].strip()
+        Quantidade = float(request.form['Quantidade'])
+        Vlr_Unit = float(request.form['Vlr_Unit'])
+
+        with conexao() as cnxn:
+            cad_Produto(cnxn, NF_ENT, EAN, Descricao, Quantidade, Vlr_Unit)
+            
+        return jsonify({"mensagem": "Item cadastrado com sucesso!"}), 201
+        
+    except ValueError as ve:
+        return jsonify({"erro": f"Erro de validação: {str(ve)}"}), 400
+    except Exception as e:
+        return jsonify({"erro": f"Erro ao cadastrar item: {str(e)}"}), 500
 
 
-@entrada_bp.route('/EntradaNota=?0005', methods=['POST'])
+@entrada_bp.route('/0005', methods=['POST'])
 def inserir_nota():
     NF_ENT = request.form['NF_ENT']
     Dat_Entrada = request.form['Dat_Entrada']

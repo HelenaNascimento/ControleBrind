@@ -104,11 +104,11 @@
 
         function toggleFields_cad() {
             // Verifica qual botão de rádio está selecionado
-            const compraWeb = document.querySelector('input[name="compra"][value="Web"]').checked;
-            const webField = document.getElementById("webField");
+            const compraWeb = document.querySelector('input[name="FLG_COMPRA"][value="1"]').checked;  
             const addressFields = document.getElementById("addressFields");
 
             // Alterna a exibição dos campos com base no valor
+            document.getElementById('webField').style.display = compraWeb ? 'block' : 'none';
             if (compraWeb) {
                 webField.style.display = "block";
                 addressFields.style.display = "none";
@@ -155,7 +155,7 @@
             <div class="col-md-6">
                 <div class="form-section">
                     <h3>Cabeçalho Nota de Entrada</h3>
-                    <form action="{{ url_for('entrada.consultar_fornecedor') }}" method="post">
+                    <form action="{{ url_for('EntradaNota.consultar_fornecedor') }}" method="post">
                         <div class="form-group">
                             <label>Possui Chave de Acesso?</label>
                             <div>
@@ -219,7 +219,7 @@
             <div class="col-md-6">
                 <div class="form-section">
                     <h3>Itens</h3>
-                    <form action="{{ url_for('entrada.inserir_item') }}" method="post">
+                    <form action="{{ url_for('EntradaNota.inserir_item') }}" method="post">
                         <div class="form-group">
                             <label for="Descricao">Descrição:</label>
                             <input type="text" class="form-control" name="Descricao">
@@ -288,84 +288,82 @@
     <!-- Modal - Cadastrar Fornecedor-->
     <div class="modal fade" id="cadastrarFornecedor" tabindex="-1" role="dialog" aria-labelledby="cadastrarModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="cadastrarModalLabel">Cadastrar Fornecedor</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="Fantasia">Razão Social:</label>
-                        <input type="text" class="form-control" name="Fantasia">
+            <form id="formFornecedor" method="POST" action='0003'>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cadastrarModalLabel">Cadastrar Fornecedor</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <br>
-                    <div> 
-                        <label for="cnpjcadastro">CNPJ Fornecedor:</label>  
-                        <input type="text" class="form-control" name="CNPJ_FORN">
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label>Compra: </label>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="Fantasia">Razão Social:</label>
+                            <input type="text" class="form-control" name="Razao_Social" required>
+                        </div>
+                        <br>
                         <div>
-                            <input type="radio" name="compra" value="Web" checked  onchange="toggleFields_cad()"> Web
-                            <input type="radio" name="compra" value="Lj_F" onchange="toggleFields_cad()"> Loja Física
+                            <label for="cnpjcadastro">CNPJ Fornecedor:</label>
+                            <input type="text" class="form-control" name="CNPJ" required>
                         </div>
-                    </div>
-                    
-                    <!-- Campo para o site do fornecedor -->
-                    <div id="webField" class="form-group">
-                        <label for="website">Site do Fornecedor:</label>
-                        <input type="url" class="form-control" name="website" placeholder="https://">
-                    </div>
-                    
-                    <!-- Campos para endereço do fornecedor -->
-                    <div id="addressFields" style="display: none;">
-                        <div >                       
-                            <label for="rua">Rua:</label>
-                            <input type="text" class="form-control" name="rua">
+                        <br>
+                        <div class="form-group">
+                            <label>Compra:</label>
+                            <div>
+                                <input type="radio" name="FLG_COMPRA" value="1" checked onchange="toggleFields_cad()"> Web
+                                <input type="radio" name="FLG_COMPRA" value="0" onchange="toggleFields_cad()"> Loja Física
+                            </div>
                         </div>
-                        <div class="form-group mb-3">
-                            <div class="row mb-3">
-                                <div class="col-md-4 form-group">                       
-                                    <label for="rua">Nº:</label>
-                                    <input type="text" class="form-control" name="numero">
+                        <!-- Campo para o site do fornecedor -->
+                        <div id="webField" class="form-group">
+                            <label for="website">Site do Fornecedor:</label>
+                            <input type="url" class="form-control" name="SITE" placeholder="https://">
+                        </div>
+                        <!-- Campos para endereço do fornecedor -->
+                        <div id="addressFields">
+                            <div>
+                                <label for="rua">Rua:</label>
+                                <input type="text" class="form-control" name="Rua" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <div class="row mb-3">
+                                    <div class="col-md-4 form-group">
+                                        <label for="numero">Nº:</label>
+                                        <input type="text" class="form-control" name="Numero" required>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="bairro">Bairro:</label>
+                                        <input type="text" class="form-control" name="IdBair" required>
+                                    </div>
                                 </div>
-                                <div class="col-md-4 form-group">                           
-                                    <label for="bairro">Bairro:</label>
-                                    <input type="text" class="form-control" name="bairro">
+                            </div>
+                            <div>
+                                <label for="complemento">Complemento:</label>
+                                <input type="text" class="form-control" name="Complemento">
+                            </div>
+                            <div class="form-group mb-3">
+                                <div class="row mb-3">
+                                    <div class="col-md-4 form-group">
+                                        <label for="cidade">Cidade:</label>
+                                        <input type="text" class="form-control" name="nome_cidade" required>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="estado">Estado (UF):</label>
+                                        <input type="text" class="form-control" name="UF" required>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div>  
-                            <label for="estado">Complemento:</label>
-                            <input type="text" class="form-control" name="complemento">
-                        </div>                                   
-                        <div class="form-group mb-3">
-                            <div class="row mb-3">
-                                <div class="col-md-4 form-group"> 
-                                    <label for="cidade">Cidade:</label>
-                                    <input type="text" class="form-control" name="cidade">
-
-                                </div>
-                                <div class="col-md-4 form-group">  
-                                    <button type="button" class="btn btn-primary">...</button>
-                                </div>                   
-                                <div class="col-md-4 form-group">                         
-                                    <label for="estado">Estado(UF):</label>
-                                    <input type="text" class="form-control" name="estado">
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Confirmar Cadastro</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Confirmar Cadastro</button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
+    
     <!-- Modal - Cadastrar Produto -->
     <div class="modal fade" id="cadastrarProduto" tabindex="-1" role="dialog" aria-labelledby="cadastrarModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

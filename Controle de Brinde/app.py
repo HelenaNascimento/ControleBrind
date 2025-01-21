@@ -48,7 +48,7 @@ def login():
                     flash('Login realizado com sucesso!', 'success')
 
                     if Login == 'Entrada':
-                        return redirect(url_for('entrada.Ent_CB'))
+                        return redirect(url_for('EntradaNota.Ent_CB'))
                     elif Login == 'Saida':
                         return redirect(url_for('saida.Sai_CB'))
                     elif Login == 'Brinde':
@@ -72,7 +72,7 @@ def logout():
     return redirect(url_for('login'))
 
 # Registrando os blueprints
-app.register_blueprint(entrada_bp)
+app.register_blueprint(entrada_bp, url_prefix = '/EntradaNota')
 app.register_blueprint(saida_bp)
 app.register_blueprint(brinde_bp)
 app.register_blueprint(televendas_bp)
