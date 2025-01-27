@@ -1,3 +1,7 @@
+USE BD_BRIND
+GO
+
+
 CREATE PROCEDURE PR_AtualizaEstoque
     @Qtd_Disp_Item INT,
 	@ID_PROD INT

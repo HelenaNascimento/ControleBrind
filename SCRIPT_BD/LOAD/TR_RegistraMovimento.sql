@@ -1,3 +1,7 @@
+USE BD_BRIND
+GO
+
+
 CREATE TRIGGER RegistrarMovimento
 ON IT_ENT
 AFTER INSERT

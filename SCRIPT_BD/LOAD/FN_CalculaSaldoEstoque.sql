@@ -1,3 +1,7 @@
+
+USE BD_BRIND
+GO
+
 CREATE FUNCTION FN_CalculaSaldoEstoque
 (
     @ItemID INT,

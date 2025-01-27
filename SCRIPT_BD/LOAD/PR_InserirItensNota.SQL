@@ -1,3 +1,8 @@
+
+
+USE BD_BRIND
+GO
+
 CREATE PROCEDURE InserirItensNota
     @IdNota_Ent INT, 
     @NF_Ent INT, 

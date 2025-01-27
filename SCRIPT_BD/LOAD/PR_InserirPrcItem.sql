@@ -1,3 +1,7 @@
+
+USE BD_BRIND
+GO
+
 CREATE PROCEDURE PR_InserirDadosTabPrec
     @ID_PROD INT,
 	@Dat_Entrada INT,

@@ -1,3 +1,7 @@
+
+USE BD_BRIND
+GO
+
 CREATE PROCEDURE  PR_InserirMovItem
     @ID_PROD INT,
     @Qtd_Ent INT, 

@@ -1,3 +1,7 @@
+USE BD_BRIND
+GO
+
+
 CREATE PROCEDURE PR_InserirNotaFiscal
 	@Num_Nota INT,
 	@Chv_Acesso VARCHAR(44),

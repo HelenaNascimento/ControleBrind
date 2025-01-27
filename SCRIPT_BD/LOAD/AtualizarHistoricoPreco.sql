@@ -1,3 +1,6 @@
+USE dbo.BD_BRIND
+GO
+
 CREATE TRIGGER AtualizarHistoricoPreco
 ON IT_ENT
 AFTER INSERT
