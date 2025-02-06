@@ -112,6 +112,7 @@ def insert_data(cnxn, FLG_COMPRA):
     cnxn.commit()
     print("Dados inseridos com sucesso!")
 
+
 # Função para consultar Produtos
 def bus_Produto(cnxn, Descricao):
     cursor = cnxn.cursor()
@@ -131,6 +132,8 @@ def bus_Produto(cnxn, Descricao):
     cnxn.commit()
     Dados_Produto = pd.read_sql_query(cnxn, params=[Descricao])
     return Dados_Produto
+
+
 # Função para cadastrar produto
 def cad_Produto(cnxn, NF_ENT, EAN, Descricao, Quantidade, Vlr_Unit):
     cursor = cnxn.cursor()
@@ -379,7 +382,8 @@ def buscar_produto():
     cnxn = conexao()
     produtos_df = bus_Produto(cnxn, Descricao)
     cnxn.close()
-    return produtos_df.to_json(orient="records")   
+    return produtos_df.to_json(orient="records")
+
 
 @entrada_bp.route("/logout")
 def logout():
