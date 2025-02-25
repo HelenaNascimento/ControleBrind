@@ -30,7 +30,6 @@ def estoque_disponivel(cnxn):
             Qtd_Dispon,
             Marca
         FROM VW_ESTOQUE
-        WHERE Qtd_Dispon > 0
         order by Descricao       
     """
     produto = pd.read_sql_query(query, cnxn)
