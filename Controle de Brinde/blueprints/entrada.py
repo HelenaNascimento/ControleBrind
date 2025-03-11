@@ -394,7 +394,7 @@ def logout():
 
 @entrada_bp.route("/logoff")
 def logoff():
-    return redirect(url_for("login.log_CB"))
+    return redirect(url_for("app.log_CB"))
 
 
 if __name__ == "__main__":
