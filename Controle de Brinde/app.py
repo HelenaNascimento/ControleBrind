@@ -14,7 +14,7 @@ app.secret_key = 'supersecretkey'  # para flash messages e sessões
 # Função de conexão ao banco de dados
 def conexao():
     try:
-        server = 'TECHNICAL\\DEV' #'WIN11\\DEV' #'SRVHOSTHPNEW' #'TECHNICAL\\DEV'
+        server = 'WIN11\\DEV' #'WIN11\\DEV' #'SRVHOSTHPNEW' #'TECHNICAL\\DEV'
         database = 'BD_BRIND' #BD_BRINDE
         username = 'sa'
         password = 'senha@123' #'senha@123' #Infarma@2016.
