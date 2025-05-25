@@ -345,7 +345,7 @@
 
                         <div class="final-buttons">
                             <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#consultarProduto">Consultar</button>
+                                data-target="#consultarProduto">Consultar</button>
                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#cadastrarProduto">Cadastrar</button>
                         </div>
@@ -377,7 +377,6 @@
                     <h3 class="mt-4">Itens Inseridos</h3>
                     <div class="form-group">
                         <textarea class="form-control" rows="5" readonly></textarea>
-                        <button type="button" class="btn btn-danger">Excluir</button>
                     </div>
 
                     <div class="final-buttons">
@@ -476,7 +475,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="consultarModalLabel">Cadastrar Produto</h5>
+                    <h5 class="modal-title" id="consultarModalLabel">Produtos</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -484,33 +483,16 @@
                 <div class="modal-body">
                     <!-- Conteúdo do modal -->
                     <form>
-                        <div class="form-group">
-                            <label for="descricao">Descrição</label>
-                            <input type="text" class="form-control" id="descricao" name="descricao">
-                        </div>
-                        <h3 class="mt-4">Itens:</h3>
                         <div class="form-group table-responsive">
-                            <table class="table table-bordered" id="estoque-table">
-                                <thead>
-                                    <tr>
-                                        <th>Id_Produto</th>
-                                        <th>EAN</th>
-                                        <th>Descrição</th>
-                                        <th>Disponivel</th>
-                                        <th>Marca</th>
-                                        <th></th> <!-- Coluna para o botão de rádio -->
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Os dados da consulta serão inseridos aqui via JavaScript -->
-                                </tbody>
-                            </table>
+                            <div class="form-group">
+                                <textarea class="form-control" rows="5" readonly></textarea>
+                            </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Salvar</button>
+                    <button type="button" class="btn btn-primary">Confirmar</button>
                 </div>
             </div>
         </div>
